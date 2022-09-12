@@ -1,6 +1,5 @@
 package roach.ryan.ff.data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import roach.ryan.ff.model.Defense;
@@ -16,19 +15,18 @@ public class FreeAgentPool
     private final List<RunningBack> rbs;
     private final List<WideReceiver> wrs;
     private final List<TightEnd> tes;
-    private final List<Flex> flexes = new ArrayList<>();
+    private final List<Flex> flexes;
     private final List<Defense> dsts;
 
     public FreeAgentPool(List<Quarterback> qbs, List<RunningBack> rbs, List<WideReceiver> wrs, List<TightEnd> tes,
-            List<Defense> dsts)
+            List<Defense> dsts, List<Flex> flexes)
     {
         this.qbs = qbs;
         this.rbs = rbs;
         this.wrs = wrs;
         this.tes = tes;
         this.dsts = dsts;
-        flexes.addAll(rbs);
-        flexes.addAll(wrs);
+        this.flexes = flexes;
     }
 
     public List<Quarterback> getQuarterbacks()

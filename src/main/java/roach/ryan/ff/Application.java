@@ -1,8 +1,12 @@
 package roach.ryan.ff;
 
+import static java.util.Comparator.comparing;
+
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigInteger;
+import java.util.Iterator;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 import roach.ryan.ff.data.DataParser;
 import roach.ryan.ff.data.FreeAgentPool;
@@ -23,8 +27,47 @@ public class Application
     {
         DataParser parser = new DataParser(new File(args[0]));
         FreeAgentPool pool = new FreeAgentPool(parser.getQuarterbacks(), parser.getRunningBacks(),
-                parser.getWideReceivers(), parser.getTightEnds(), parser.getDefenses());
-        List<Team> teams = new ArrayList<>();
+                parser.getWideReceivers(), parser.getTightEnds(), parser.getDefenses(), parser.getFlexes());
+        if (isPoolSizeTooLarge(pool))
+        {
+            System.out.println("Player pool is too large. Program will take over five minutes to complete.");
+            System.exit(0);
+        }
+        printTopTenPointsPerSalaryPerPosition();
+        printTopFiveTeams(pool);
+    }
+
+    private static int sumSalary(Player... players)
+    {
+        int salary = 0;
+        for (Player player : players)
+        {
+            salary += player.getSalary();
+        }
+        return salary;
+    }
+
+    private static boolean isPoolSizeTooLarge(FreeAgentPool pool)
+    {
+        BigInteger qbCount = BigInteger.valueOf(pool.getQuarterbacks().size());
+        BigInteger rbCount = BigInteger.valueOf(pool.getRunningBacks().size());
+        BigInteger wrCount = BigInteger.valueOf(pool.getWideReceivers().size());
+        BigInteger teCount = BigInteger.valueOf(pool.getTightEnds().size());
+        BigInteger defCount = BigInteger.valueOf(pool.getDefenses().size());
+        BigInteger flexCount = BigInteger.valueOf(pool.getFlexes().size());
+        BigInteger combos = qbCount.multiply(rbCount).multiply(rbCount).multiply(wrCount).multiply(wrCount)
+                .multiply(wrCount).multiply(defCount).multiply(flexCount).multiply(teCount);
+        return combos.compareTo(new BigInteger("25000000000")) > 0;
+    }
+
+    private static void printTopTenPointsPerSalaryPerPosition()
+    {
+
+    }
+
+    private static void printTopFiveTeams(FreeAgentPool pool)
+    {
+        Queue<Team> teams = new PriorityQueue<>(comparing(Team::getPoints));
         for (Quarterback qb : pool.getQuarterbacks())
         {
             for (RunningBack rb1 : pool.getRunningBacks())
@@ -33,44 +76,38 @@ public class Application
                 {
                     for (WideReceiver wr1 : pool.getWideReceivers())
                     {
-                        if(sumSalary(qb, rb1, rb2, wr1) > FanDuelTeam.getSalaryCap()) {
-                            continue;
-                        }
                         for (WideReceiver wr2 : pool.getWideReceivers())
                         {
-                            if(sumSalary(qb, rb1, rb2, wr1,wr2) > FanDuelTeam.getSalaryCap()) {
-                                continue;
-                            }
                             for (WideReceiver wr3 : pool.getWideReceivers())
                             {
-                                if(sumSalary(qb, rb1, rb2, wr1,wr2, wr3) > FanDuelTeam.getSalaryCap()) {
-                                    continue;
-                                }
                                 for (TightEnd te : pool.getTightEnds())
                                 {
-                                    if(sumSalary(qb, rb1, rb2, wr1,wr2, wr3, te) > FanDuelTeam.getSalaryCap()) {
-                                        continue;
-                                    }
                                     for (Flex flex : pool.getFlexes())
                                     {
-                                        if(sumSalary(qb, rb1, rb2, wr1,wr2, wr3, te, flex) > FanDuelTeam.getSalaryCap()) {
-                                            continue;
-                                        }
-                                        if(rb1.equals(rb2) || wr1.equals(wr2) || wr1.equals(wr3) || wr2.equals(wr3) || rb1.equals(flex) || rb2.equals(flex) || wr1.equals(flex) || wr2.equals(flex) || wr3.equals(flex)) {
+                                        if (rb1.equals(rb2) || wr1.equals(wr2) || wr1.equals(wr3) || wr2.equals(wr3)
+                                                || rb1.equals(flex) || rb2.equals(flex) || wr1.equals(flex)
+                                                || wr2.equals(flex) || wr3.equals(flex))
+                                        {
                                             continue;
                                         }
                                         for (Defense dst : pool.getDefenses())
                                         {
-                                            if(sumSalary(qb, rb1, rb2, wr1,wr2, wr3, te, flex, dst) > FanDuelTeam.getSalaryCap()) {
+                                            if (sumSalary(qb, rb1, rb2, wr1, wr2, wr3, te, flex, dst) > FanDuelTeam
+                                                    .getSalaryCap())
+                                            {
                                                 continue;
                                             }
-                                            Team team = new FanDuelTeam(qb, rb1, rb2, wr1,wr2, wr3, te, flex, dst);
-                                            if ((teams.isEmpty()
-                                                    || team.getPoints() >= teams.get(teams.size() - 1).getPoints())
-                                                    && !teams.contains(team))
+                                            Team team = new FanDuelTeam(qb, rb1, rb2, wr1, wr2, wr3, te, flex, dst);
+                                            if (teams.size() < 5)
                                             {
                                                 teams.add(team);
-                                                System.out.println(team);
+                                            }
+                                            else if (teams.peek().getPoints() < team.getPoints()
+                                                    && !teams.contains(team))
+                                            {
+
+                                                teams.poll();
+                                                teams.add(team);
                                             }
                                         }
                                     }
@@ -81,15 +118,17 @@ public class Application
                 }
             }
         }
-    }
-
-    private static int sumSalary(Player... players)
-    {
-        int salary = 0;
-        for(Player player: players) {
-            salary += player.getSalary();
+        if (teams.isEmpty())
+        {
+            System.out.println("No valid teams can be made from the pool.");
         }
-        return salary;
-    }
 
+        int i = 5;
+        Iterator<Team> it = teams.iterator();
+        while (it.hasNext())
+        {
+            System.out.println("#" + i--);
+            System.out.println(it.next());
+        }
+    }
 }

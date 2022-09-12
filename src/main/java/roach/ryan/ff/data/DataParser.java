@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import roach.ryan.ff.model.Defense;
+import roach.ryan.ff.model.Flex;
 import roach.ryan.ff.model.Player;
 import roach.ryan.ff.model.Quarterback;
 import roach.ryan.ff.model.RunningBack;
@@ -23,6 +24,7 @@ public class DataParser
     private final List<WideReceiver> wrs = new ArrayList<>();
     private final List<TightEnd> tes = new ArrayList<>();
     private final List<Defense> dsts = new ArrayList<>();
+    private final List<Flex> flexes = new ArrayList<>();
 
     public DataParser(File file)
     {
@@ -30,7 +32,7 @@ public class DataParser
         {
             while (scanner.hasNext())
             {
-                //line format should be "QB,8700,Patrick Mahomes II,25.2"
+                // line format should be "QB,8700,Patrick Mahomes II,25.2"
                 String[] parts = scanner.nextLine().split(",");
                 String position = parts[0].replaceAll("[^A-Za-z]+", "");
                 int salary = Integer.valueOf(parts[1]);
@@ -64,9 +66,12 @@ public class DataParser
             System.out.println("File not found.");
             System.exit(0);
         }
+        flexes.addAll(rbs);
+        flexes.addAll(wrs);
+        optimizeSkill(flexes);
         optimize(qbs);
-        optimize(rbs);
-        optimize(wrs);
+        optimizeSkill(rbs);
+        optimizeSkill(wrs);
         optimize(tes);
         optimize(dsts);
     }
@@ -97,19 +102,30 @@ public class DataParser
         return dsts;
     }
 
-    private void optimize(List<? extends Player> players)
+    public List<Flex> getFlexes()
+    {
+        return flexes;
+    }
+
+    private static void optimize(List<? extends Player> players)
     {
         players.sort(comparing(Player::getPoints).reversed());
+        double avgPoints = players.stream().mapToDouble(Player::getPoints).average().getAsDouble();
         Iterator<? extends Player> iterator = players.iterator();
         Player current = iterator.next();
         while (iterator.hasNext())
         {
             Player last = current;
             current = iterator.next();
-            if (current.getSalary() > last.getSalary())
+            if (current.getSalary() > last.getSalary() || current.getPoints() < avgPoints)
             {
                 iterator.remove();
             }
         }
+    }
+
+    private static void optimizeSkill(List<? extends Player> players)
+    {
+        players.removeIf(p -> p.getPoints() < 16);
     }
 }

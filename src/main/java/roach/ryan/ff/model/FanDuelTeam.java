@@ -1,5 +1,7 @@
 package roach.ryan.ff.model;
 
+import java.util.Set;
+
 public class FanDuelTeam implements Team
 {
     private final Quarterback qb;
@@ -11,6 +13,8 @@ public class FanDuelTeam implements Team
     private final TightEnd te;
     private final Flex flex;
     private final Defense def;
+    private final double points;
+    private final int salary;
 
     public FanDuelTeam(Quarterback qb, RunningBack rb1, RunningBack rb2, WideReceiver wr1, WideReceiver wr2,
             WideReceiver wr3, TightEnd te, Flex flex, Defense def)
@@ -24,24 +28,22 @@ public class FanDuelTeam implements Team
         this.te = te;
         this.flex = flex;
         this.def = def;
-        if (getSalary() > getSalaryCap())
-        {
-            throw new IllegalArgumentException("salary exceeds cap");
-        }
+        points = qb.getPoints() + rb1.getPoints() + rb2.getPoints() + wr1.getPoints() + wr2.getPoints()
+                + wr3.getPoints() + te.getPoints() + flex.getPoints() + def.getPoints();
+        salary = qb.getSalary() + rb1.getSalary() + rb2.getSalary() + wr1.getSalary() + wr2.getSalary()
+                + wr3.getSalary() + te.getSalary() + flex.getSalary() + def.getSalary();
     }
 
     @Override
     public double getPoints()
     {
-        return qb.getPoints() + rb1.getPoints() + rb2.getPoints() + wr1.getPoints() + wr2.getPoints() + wr3.getPoints()
-                + te.getPoints() + flex.getPoints() + def.getPoints();
+        return points;
     }
 
     @Override
     public int getSalary()
     {
-        return qb.getSalary() + rb1.getSalary() + rb2.getSalary() + wr1.getSalary() + wr2.getSalary() + wr3.getSalary()
-                + te.getSalary() + flex.getSalary() + def.getSalary();
+        return salary;
     }
 
     @Override
@@ -83,6 +85,32 @@ public class FanDuelTeam implements Team
     public static int getSalaryCap()
     {
         return 60000;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((def == null) ? 0 : def.hashCode());
+        result = prime * result + ((flex == null) ? 0 : flex.hashCode());
+        result = prime * result + ((qb == null) ? 0 : qb.hashCode());
+        result = prime * result + ((rb1 == null) ? 0 : rb1.hashCode());
+        result = prime * result + ((rb2 == null) ? 0 : rb2.hashCode());
+        result = prime * result + ((te == null) ? 0 : te.hashCode());
+        result = prime * result + ((wr1 == null) ? 0 : wr1.hashCode());
+        result = prime * result + ((wr2 == null) ? 0 : wr2.hashCode());
+        result = prime * result + ((wr3 == null) ? 0 : wr3.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        FanDuelTeam other = (FanDuelTeam) obj;
+        return Set.of(qb, rb1, rb2, wr1, wr2, wr3, te, def, flex).equals(Set.of(other.qb, other.rb1, other.rb2,
+                other.wr1, other.wr2, other.wr3, other.te, other.def, other.flex));
+
     }
 
 }
