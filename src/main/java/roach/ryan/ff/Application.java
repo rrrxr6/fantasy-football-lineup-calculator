@@ -1,83 +1,75 @@
 package roach.ryan.ff;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import roach.ryan.ff.data.DataParser;
-import roach.ryan.ff.model.FreeAgentPool;
+import roach.ryan.ff.data.FreeAgentPool;
+import roach.ryan.ff.model.Defense;
+import roach.ryan.ff.model.FanDuelTeam;
+import roach.ryan.ff.model.Flex;
 import roach.ryan.ff.model.Player;
+import roach.ryan.ff.model.Quarterback;
+import roach.ryan.ff.model.RunningBack;
 import roach.ryan.ff.model.Team;
+import roach.ryan.ff.model.TightEnd;
+import roach.ryan.ff.model.WideReceiver;
 
 public class Application
 {
 
-    public static void main(String[] args) throws FileNotFoundException
+    public static void main(String[] args)
     {
-        FreeAgentPool pool = new FreeAgentPool(DataParser.read(new File(args[0])));
+        DataParser parser = new DataParser(new File(args[0]));
+        FreeAgentPool pool = new FreeAgentPool(parser.getQuarterbacks(), parser.getRunningBacks(),
+                parser.getWideReceivers(), parser.getTightEnds(), parser.getDefenses());
         List<Team> teams = new ArrayList<>();
-        for (Player qb : pool.getQuarterbacks())
+        for (Quarterback qb : pool.getQuarterbacks())
         {
-            Team team = new Team(60000);
-            if (!team.setQuarterback(qb))
+            for (RunningBack rb1 : pool.getRunningBacks())
             {
-                continue;
-            }
-            for (Player rb1 : pool.getRunningBacks())
-            {
-                if (!team.setRunningBack1(rb1))
+                for (RunningBack rb2 : pool.getRunningBacks())
                 {
-                    continue;
-                }
-                for (Player rb2 : pool.getRunningBacks())
-                {
-                    if (!team.setRunningBack2(rb2))
+                    for (WideReceiver wr1 : pool.getWideReceivers())
                     {
-                        continue;
-                    }
-                    for (Player wr1 : pool.getWideReceivers())
-                    {
-                        if (!team.setWideReceiver1(wr1))
-                        {
+                        if(sumSalary(qb, rb1, rb2, wr1) > FanDuelTeam.getSalaryCap()) {
                             continue;
                         }
-                        for (Player wr2 : pool.getWideReceivers())
+                        for (WideReceiver wr2 : pool.getWideReceivers())
                         {
-                            if (!team.setWideReceiver2(wr2))
-                            {
+                            if(sumSalary(qb, rb1, rb2, wr1,wr2) > FanDuelTeam.getSalaryCap()) {
                                 continue;
                             }
-                            for (Player wr3 : pool.getWideReceivers())
+                            for (WideReceiver wr3 : pool.getWideReceivers())
                             {
-                                if (!team.setWideReceiver3(wr3))
-                                {
+                                if(sumSalary(qb, rb1, rb2, wr1,wr2, wr3) > FanDuelTeam.getSalaryCap()) {
                                     continue;
                                 }
-                                for (Player te : pool.getTightEnds())
+                                for (TightEnd te : pool.getTightEnds())
                                 {
-                                    if (!team.setTightEnd(te))
-                                    {
+                                    if(sumSalary(qb, rb1, rb2, wr1,wr2, wr3, te) > FanDuelTeam.getSalaryCap()) {
                                         continue;
                                     }
-                                    for (Player flex : pool.getFlexes())
+                                    for (Flex flex : pool.getFlexes())
                                     {
-                                        if (!team.setFlex(flex))
-                                        {
+                                        if(sumSalary(qb, rb1, rb2, wr1,wr2, wr3, te, flex) > FanDuelTeam.getSalaryCap()) {
                                             continue;
                                         }
-                                        for (Player dst : pool.getDefenses())
+                                        if(rb1.equals(rb2) || wr1.equals(wr2) || wr1.equals(wr3) || wr2.equals(wr3) || rb1.equals(flex) || rb2.equals(flex) || wr1.equals(flex) || wr2.equals(flex) || wr3.equals(flex)) {
+                                            continue;
+                                        }
+                                        for (Defense dst : pool.getDefenses())
                                         {
-                                            if (!team.setDefense(dst))
-                                            {
+                                            if(sumSalary(qb, rb1, rb2, wr1,wr2, wr3, te, flex, dst) > FanDuelTeam.getSalaryCap()) {
                                                 continue;
                                             }
-
+                                            Team team = new FanDuelTeam(qb, rb1, rb2, wr1,wr2, wr3, te, flex, dst);
                                             if ((teams.isEmpty()
                                                     || team.getPoints() >= teams.get(teams.size() - 1).getPoints())
                                                     && !teams.contains(team))
                                             {
-                                                teams.add(team.copy());
+                                                teams.add(team);
                                                 System.out.println(team);
                                             }
                                         }
@@ -89,6 +81,15 @@ public class Application
                 }
             }
         }
+    }
+
+    private static int sumSalary(Player... players)
+    {
+        int salary = 0;
+        for(Player player: players) {
+            salary += player.getSalary();
+        }
+        return salary;
     }
 
 }

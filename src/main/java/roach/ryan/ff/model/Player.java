@@ -2,17 +2,15 @@ package roach.ryan.ff.model;
 
 import java.util.Objects;
 
-public class Player
+public abstract class Player
 {
     private final String name;
-    private final Position position;
     private final int salary;
     private final double points;
 
-    public Player(String name, Position position, int salary, double points)
+    public Player(String name, int salary, double points)
     {
         this.name = name;
-        this.position = position;
         this.salary = salary;
         this.points = points;
     }
@@ -20,11 +18,6 @@ public class Player
     public String getName()
     {
         return name;
-    }
-
-    public Position getPosition()
-    {
-        return position;
     }
 
     public int getSalary()
@@ -38,14 +31,15 @@ public class Player
     }
 
     @Override
-    public String toString() {
-        return String.format("[%25s, %4s, $%,6d, %4.1f]", name, position.getDisplay(), salary, points);
+    public String toString()
+    {
+        return String.format("[%25s, %13s, $%,6d, %4.1f]", name, getClass().getSimpleName(), salary, points);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(name, points, position, salary);
+        return Objects.hash(name, points, salary);
     }
 
     @Override
@@ -59,7 +53,6 @@ public class Player
             return false;
         Player other = (Player) obj;
         return Objects.equals(name, other.name)
-                && Double.doubleToLongBits(points) == Double.doubleToLongBits(other.points)
-                && position == other.position && salary == other.salary;
+                && Double.doubleToLongBits(points) == Double.doubleToLongBits(other.points) && salary == other.salary;
     }
 }
