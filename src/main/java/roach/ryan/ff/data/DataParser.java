@@ -68,6 +68,10 @@ public class DataParser
         }
         flexes.addAll(rbs);
         flexes.addAll(wrs);
+    }
+
+    public void optimize()
+    {
         optimizeSkill(flexes);
         optimize(qbs);
         optimizeSkill(rbs);
@@ -88,7 +92,6 @@ public class DataParser
 
     public List<WideReceiver> getWideReceivers()
     {
-
         return wrs;
     }
 
@@ -126,6 +129,6 @@ public class DataParser
 
     private static void optimizeSkill(List<? extends Player> players)
     {
-        players.removeIf(p -> p.getPoints() < 16);
+        players.removeIf(p -> p.getPoints() < 19);
     }
 }
