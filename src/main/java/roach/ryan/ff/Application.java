@@ -4,12 +4,11 @@ import static java.util.Comparator.comparing;
 
 import java.io.File;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 import roach.ryan.ff.data.DataParser;
 import roach.ryan.ff.data.FreeAgentPool;
@@ -109,7 +108,7 @@ public class Application
 
     private static void printTopFiveTeams(FreeAgentPool pool)
     {
-        Queue<Team> teams = new PriorityQueue<>(comparing(Team::getPoints));
+        List<Team> teams = new ArrayList<>(5);
         for (Quarterback qb : pool.getQuarterbacks())
         {
             for (RunningBack rb1 : pool.getRunningBacks())
@@ -143,13 +142,14 @@ public class Application
                                             if (teams.size() < 5)
                                             {
                                                 teams.add(team);
+                                                teams.sort(comparing(Team::getPoints));
                                             }
-                                            else if (teams.peek().getPoints() < team.getPoints()
+                                            else if (teams.get(0).getPoints() < team.getPoints()
                                                     && !teams.contains(team))
                                             {
-
-                                                teams.poll();
+                                                teams.remove(0);
                                                 teams.add(team);
+                                                teams.sort(comparing(Team::getPoints));
                                             }
                                         }
                                     }

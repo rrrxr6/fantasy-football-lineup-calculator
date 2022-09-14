@@ -129,6 +129,6 @@ public class DataParser
 
     private static void optimizeSkill(List<? extends Player> players)
     {
-        players.removeIf(p -> p.getPoints() < 19);
+        players.removeIf(p -> p.getPoints() < 12);
     }
 }
