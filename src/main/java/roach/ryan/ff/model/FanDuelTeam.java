@@ -1,6 +1,7 @@
 package roach.ryan.ff.model;
 
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public class FanDuelTeam implements Team
 {
@@ -13,8 +14,9 @@ public class FanDuelTeam implements Team
     private final TightEnd te;
     private final Flex flex;
     private final Defense def;
-    private final double points;
-    private final int salary;
+    private double points = 0;
+    private int salary = 0;
+    private double averageRank = 0;
 
     public FanDuelTeam(Quarterback qb, RunningBack rb1, RunningBack rb2, WideReceiver wr1, WideReceiver wr2,
             WideReceiver wr3, TightEnd te, Flex flex, Defense def)
@@ -28,21 +30,27 @@ public class FanDuelTeam implements Team
         this.te = te;
         this.flex = flex;
         this.def = def;
-        points = qb.getPoints() + rb1.getPoints() + rb2.getPoints() + wr1.getPoints() + wr2.getPoints()
-                + wr3.getPoints() + te.getPoints() + flex.getPoints() + def.getPoints();
-        salary = qb.getSalary() + rb1.getSalary() + rb2.getSalary() + wr1.getSalary() + wr2.getSalary()
-                + wr3.getSalary() + te.getSalary() + flex.getSalary() + def.getSalary();
     }
 
     @Override
     public double getPoints()
     {
+        if (points == 0)
+        {
+            points = qb.getPoints() + rb1.getPoints() + rb2.getPoints() + wr1.getPoints() + wr2.getPoints()
+                    + wr3.getPoints() + te.getPoints() + flex.getPoints() + def.getPoints();
+        }
         return points;
     }
 
     @Override
     public int getSalary()
     {
+        if (salary == 0)
+        {
+            salary = qb.getSalary() + rb1.getSalary() + rb2.getSalary() + wr1.getSalary() + wr2.getSalary()
+                    + wr3.getSalary() + te.getSalary() + flex.getSalary() + def.getSalary();
+        }
         return salary;
     }
 
@@ -53,6 +61,8 @@ public class FanDuelTeam implements Team
         sb.append(getPoints());
         sb.append(" - Salary: ");
         sb.append(getSalary());
+        sb.append(" - Avg Rank: ");
+        sb.append(getAverageRank());
         sb.append("\n");
 
         sb.append(qb);
@@ -111,6 +121,15 @@ public class FanDuelTeam implements Team
         return Set.of(qb, rb1, rb2, wr1, wr2, wr3, te, def, flex).equals(Set.of(other.qb, other.rb1, other.rb2,
                 other.wr1, other.wr2, other.wr3, other.te, other.def, other.flex));
 
+    }
+
+    @Override
+    public double getAverageRank()
+    {
+        if(averageRank == 0) {
+            averageRank = IntStream.of(qb.getRank(), rb1.getRank(), rb2.getRank(), wr1.getRank(), wr2.getRank(), wr3.getRank(), te.getRank(), flex.getRank(), def.getRank()).average().getAsDouble();
+        }
+        return averageRank;
     }
 
 }

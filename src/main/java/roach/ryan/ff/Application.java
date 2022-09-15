@@ -27,6 +27,7 @@ public class Application
 
     public static void main(String[] args)
     {
+        Integer.valueOf("1");
         DataParser parser = new DataParser(new File(args[0]));
         FreeAgentPool pool = new FreeAgentPool(parser.getQuarterbacks(), parser.getRunningBacks(),
                 parser.getWideReceivers(), parser.getTightEnds(), parser.getDefenses(), parser.getFlexes());
@@ -142,14 +143,15 @@ public class Application
                                             if (teams.size() < 5)
                                             {
                                                 teams.add(team);
-                                                teams.sort(comparing(Team::getPoints));
+                                                teams.sort(comparing(Team::getAverageRank).reversed());
                                             }
-                                            else if (teams.get(0).getPoints() < team.getPoints()
+                                            else if (teams.get(0).getAverageRank() > team.getAverageRank()
                                                     && !teams.contains(team))
                                             {
                                                 teams.remove(0);
                                                 teams.add(team);
-                                                teams.sort(comparing(Team::getPoints));
+                                                teams.sort(comparing(Team::getAverageRank).reversed());
+//                                                System.out.println(team);
                                             }
                                         }
                                     }
