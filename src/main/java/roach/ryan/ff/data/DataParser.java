@@ -34,26 +34,27 @@ public class DataParser
             {
                 // line format should be "QB,8700,Patrick Mahomes II,25.2"
                 String[] parts = scanner.nextLine().split(",");
-                String position = parts[0].replaceAll("[^A-Za-z]+", "");
-                int salary = Integer.valueOf(parts[1]);
-                String name = parts[2];
-                double points = Double.valueOf(parts[3]);
+                int rank = Integer.valueOf(parts[0].replaceAll("[^0-9]+", ""));
+                String position = parts[1].replaceAll("[^A-Za-z]+", "");
+                int salary = Integer.valueOf(parts[2]);
+                String name = parts[3];
+                double points = Double.valueOf(parts[4]);
                 switch (position)
                 {
                     case "QB":
-                        qbs.add(new Quarterback(name, salary, points));
+                        qbs.add(new Quarterback(name, salary, points, rank));
                         break;
                     case "RB":
-                        rbs.add(new RunningBack(name, salary, points));
+                        rbs.add(new RunningBack(name, salary, points, rank));
                         break;
                     case "WR":
-                        wrs.add(new WideReceiver(name, salary, points));
+                        wrs.add(new WideReceiver(name, salary, points, rank));
                         break;
                     case "TE":
-                        tes.add(new TightEnd(name, salary, points));
+                        tes.add(new TightEnd(name, salary, points, rank));
                         break;
                     case "ST":
-                        dsts.add(new Defense(name, salary, points));
+                        dsts.add(new Defense(name, salary, points, rank));
                         break;
                     default:
                         throw new RuntimeException("unrecognized position");

@@ -5,4 +5,6 @@ public interface Team
     double getPoints();
 
     int getSalary();
+
+    double getAverageRank();
 }

@@ -7,12 +7,14 @@ public abstract class Player
     private final String name;
     private final int salary;
     private final double points;
+    private final int rank;
 
-    public Player(String name, int salary, double points)
+    public Player(String name, int salary, double points, int rank)
     {
         this.name = name;
         this.salary = salary;
         this.points = points;
+        this.rank = rank;
     }
 
     public String getName()
@@ -33,7 +35,7 @@ public abstract class Player
     @Override
     public String toString()
     {
-        return String.format("[%25s, %13s, $%,6d, %4.1f]", name, getClass().getSimpleName(), salary, points);
+        return String.format("[%25s, %13s, $%,6d, %4.1f, %3d]", name, getClass().getSimpleName(), salary, points, rank);
     }
 
     @Override
@@ -54,5 +56,10 @@ public abstract class Player
         Player other = (Player) obj;
         return Objects.equals(name, other.name)
                 && Double.doubleToLongBits(points) == Double.doubleToLongBits(other.points) && salary == other.salary;
+    }
+
+    public int getRank()
+    {
+        return rank;
     }
 }
