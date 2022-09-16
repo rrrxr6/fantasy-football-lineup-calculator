@@ -27,7 +27,6 @@ public class Application
 
     public static void main(String[] args)
     {
-        Integer.valueOf("1");
         DataParser parser = new DataParser(new File(args[0]));
         FreeAgentPool pool = new FreeAgentPool(parser.getQuarterbacks(), parser.getRunningBacks(),
                 parser.getWideReceivers(), parser.getTightEnds(), parser.getDefenses(), parser.getFlexes());

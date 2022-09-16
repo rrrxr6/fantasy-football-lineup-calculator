@@ -34,9 +34,6 @@ public class DataParser
             {
                 // line format should be "QB,8700,Patrick Mahomes II,25.2"
                 String[] parts = scanner.nextLine().split(",");
-//                String temp = parts[0].replaceAll("[^1-9]+", "");
-//                String one = "1";
-//                boolean eq = temp.equals(one);
                 int rank = Integer.valueOf(parts[0].replaceAll("[^0-9]+", ""));
                 String position = parts[1].replaceAll("[^A-Za-z]+", "");
                 int salary = Integer.valueOf(parts[2]);
@@ -124,7 +121,7 @@ public class DataParser
         {
             Player last = current;
             current = iterator.next();
-            if (current.getSalary() > last.getSalary() || current.getRank() > 9)
+            if (current.getSalary() > last.getSalary() || current.getRank() > 12)
             {
                 iterator.remove();
             }
@@ -133,6 +130,6 @@ public class DataParser
 
     private static void optimizeSkill(List<? extends Player> players)
     {
-        players.removeIf(p -> p.getRank() > 20);
+        players.removeIf(p -> p.getRank() > 17);
     }
 }
