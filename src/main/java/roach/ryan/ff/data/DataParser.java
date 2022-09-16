@@ -32,29 +32,30 @@ public class DataParser
         {
             while (scanner.hasNext())
             {
-                // line format should be "QB,8700,Patrick Mahomes II,25.2"
+                // line format should be "1,QB,8700,Patrick Mahomes II,25.2,37.7"
                 String[] parts = scanner.nextLine().split(",");
                 int rank = Integer.valueOf(parts[0].replaceAll("[^0-9]+", ""));
                 String position = parts[1].replaceAll("[^A-Za-z]+", "");
                 int salary = Integer.valueOf(parts[2]);
                 String name = parts[3];
-                double points = Double.valueOf(parts[4]);
+                double projectedPoints = Double.valueOf(parts[4]);
+                double actualPoints = Double.valueOf(parts[5]);
                 switch (position)
                 {
                     case "QB":
-                        qbs.add(new Quarterback(name, salary, points, rank));
+                        qbs.add(new Quarterback(name, salary, projectedPoints, actualPoints, rank));
                         break;
                     case "RB":
-                        rbs.add(new RunningBack(name, salary, points, rank));
+                        rbs.add(new RunningBack(name, salary, projectedPoints, actualPoints, rank));
                         break;
                     case "WR":
-                        wrs.add(new WideReceiver(name, salary, points, rank));
+                        wrs.add(new WideReceiver(name, salary, projectedPoints, actualPoints, rank));
                         break;
                     case "TE":
-                        tes.add(new TightEnd(name, salary, points, rank));
+                        tes.add(new TightEnd(name, salary, projectedPoints, actualPoints, rank));
                         break;
                     case "ST":
-                        dsts.add(new Defense(name, salary, points, rank));
+                        dsts.add(new Defense(name, salary, projectedPoints, actualPoints, rank));
                         break;
                     default:
                         throw new RuntimeException("unrecognized position");
@@ -113,15 +114,15 @@ public class DataParser
 
     private static void optimize(List<? extends Player> players)
     {
-        players.sort(comparing(Player::getPoints).reversed());
-        double avgPoints = players.stream().mapToDouble(Player::getPoints).average().getAsDouble();
+        players.sort(comparing(Player::getProjectedPoints).reversed());
+        double avgPoints = players.stream().mapToDouble(Player::getProjectedPoints).average().getAsDouble();
         Iterator<? extends Player> iterator = players.iterator();
         Player current = iterator.next();
         while (iterator.hasNext())
         {
             Player last = current;
             current = iterator.next();
-            if (current.getSalary() > last.getSalary() || current.getPoints() < avgPoints)
+            if (current.getSalary() > last.getSalary() || current.getProjectedPoints() < avgPoints)
             {
                 iterator.remove();
             }
@@ -130,6 +131,6 @@ public class DataParser
 
     private static void optimizeSkill(List<? extends Player> players)
     {
-        players.removeIf(p -> p.getPoints() < 12);
+        players.removeIf(p -> p.getProjectedPoints() < 12);
     }
 }

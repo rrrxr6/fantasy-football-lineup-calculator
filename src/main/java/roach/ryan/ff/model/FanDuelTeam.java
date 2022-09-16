@@ -14,7 +14,8 @@ public class FanDuelTeam implements Team
     private final TightEnd te;
     private final Flex flex;
     private final Defense def;
-    private double points = 0;
+    private double projectedPoints = 0;
+    private double actualPoints = 0;
     private int salary = 0;
     private double averageRank = 0;
 
@@ -33,14 +34,15 @@ public class FanDuelTeam implements Team
     }
 
     @Override
-    public double getPoints()
+    public double getProjectedPoints()
     {
-        if (points == 0)
+        if (projectedPoints == 0)
         {
-            points = qb.getPoints() + rb1.getPoints() + rb2.getPoints() + wr1.getPoints() + wr2.getPoints()
-                    + wr3.getPoints() + te.getPoints() + flex.getPoints() + def.getPoints();
+            projectedPoints = qb.getProjectedPoints() + rb1.getProjectedPoints() + rb2.getProjectedPoints()
+                    + wr1.getProjectedPoints() + wr2.getProjectedPoints() + wr3.getProjectedPoints()
+                    + te.getProjectedPoints() + flex.getProjectedPoints() + def.getProjectedPoints();
         }
-        return points;
+        return projectedPoints;
     }
 
     @Override
@@ -58,7 +60,7 @@ public class FanDuelTeam implements Team
     public String toString()
     {
         StringBuilder sb = new StringBuilder("Points: ");
-        sb.append(getPoints());
+        sb.append(getProjectedPoints());
         sb.append(" - Salary: ");
         sb.append(getSalary());
         sb.append(" - Avg Rank: ");
@@ -132,6 +134,18 @@ public class FanDuelTeam implements Team
                     wr3.getRank(), te.getRank(), flex.getRank(), def.getRank()).average().getAsDouble();
         }
         return averageRank;
+    }
+
+    @Override
+    public double getActualPoints()
+    {
+        if (actualPoints == 0)
+        {
+            actualPoints = qb.getActualPoints() + rb1.getActualPoints() + rb2.getActualPoints() + wr1.getActualPoints()
+                    + wr2.getActualPoints() + wr3.getActualPoints() + te.getActualPoints() + flex.getActualPoints()
+                    + def.getActualPoints();
+        }
+        return actualPoints;
     }
 
 }

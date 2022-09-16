@@ -2,10 +2,8 @@ package roach.ryan.ff.model;
 
 public class RunningBack extends Flex
 {
-
-    public RunningBack(String name, int salary, double points, int rank)
+    public RunningBack(String name, int salary, double projectedPoints, double actualPoints, int rank)
     {
-        super(name, salary, points, rank);
+        super(name, salary, projectedPoints, actualPoints, rank);
     }
-
 }
