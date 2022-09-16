@@ -6,15 +6,17 @@ public abstract class Player
 {
     private final String name;
     private final int salary;
-    private final double points;
+    private final double projectedPoints;
+    private final double actualPoints;
     private final int rank;
 
-    public Player(String name, int salary, double points, int rank)
+    public Player(String name, int salary, double projectedPoints, double actualPoints, int rank)
     {
         this.name = name;
         this.salary = salary;
-        this.points = points;
+        this.projectedPoints = projectedPoints;
         this.rank = rank;
+        this.actualPoints = actualPoints;
     }
 
     public String getName()
@@ -27,21 +29,27 @@ public abstract class Player
         return salary;
     }
 
-    public double getPoints()
+    public double getProjectedPoints()
     {
-        return points;
+        return projectedPoints;
+    }
+
+    public double getActualPoints()
+    {
+        return actualPoints;
     }
 
     @Override
     public String toString()
     {
-        return String.format("[%25s, %13s, $%,6d, %4.1f, %3d]", name, getClass().getSimpleName(), salary, points, rank);
+        return String.format("[%25s, %13s, $%,6d, %4.1f, %3d]", name, getClass().getSimpleName(), salary,
+                projectedPoints, rank);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(name, points, salary);
+        return Objects.hash(name, projectedPoints, salary);
     }
 
     @Override
@@ -55,7 +63,8 @@ public abstract class Player
             return false;
         Player other = (Player) obj;
         return Objects.equals(name, other.name)
-                && Double.doubleToLongBits(points) == Double.doubleToLongBits(other.points) && salary == other.salary;
+                && Double.doubleToLongBits(projectedPoints) == Double.doubleToLongBits(other.projectedPoints)
+                && salary == other.salary;
     }
 
     public int getRank()

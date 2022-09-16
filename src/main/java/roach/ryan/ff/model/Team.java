@@ -2,7 +2,9 @@ package roach.ryan.ff.model;
 
 public interface Team
 {
-    double getPoints();
+    double getProjectedPoints();
+
+    double getActualPoints();
 
     int getSalary();
 

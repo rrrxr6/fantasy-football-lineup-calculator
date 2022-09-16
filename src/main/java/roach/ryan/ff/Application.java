@@ -83,7 +83,7 @@ public class Application
             @Override
             public int compare(Player p1, Player p2)
             {
-                double comparison = p1.getPoints() / p1.getSalary() - p2.getPoints() / p2.getSalary();
+                double comparison = p1.getProjectedPoints() / p1.getSalary() - p2.getProjectedPoints() / p2.getSalary();
                 if (comparison > 0)
                 {
                     return -1;
@@ -142,14 +142,14 @@ public class Application
                                             if (teams.size() < 5)
                                             {
                                                 teams.add(team);
-                                                teams.sort(comparing(Team::getPoints));
+                                                teams.sort(comparing(Team::getProjectedPoints));
                                             }
-                                            else if (teams.get(0).getPoints() < team.getPoints()
+                                            else if (teams.get(0).getProjectedPoints() < team.getProjectedPoints()
                                                     && !teams.contains(team))
                                             {
                                                 teams.remove(0);
                                                 teams.add(team);
-                                                teams.sort(comparing(Team::getPoints));
+                                                teams.sort(comparing(Team::getProjectedPoints));
                                             }
                                         }
                                     }
