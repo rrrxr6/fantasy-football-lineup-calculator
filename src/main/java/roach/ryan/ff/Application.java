@@ -142,15 +142,14 @@ public class Application
                                             if (teams.size() < 5)
                                             {
                                                 teams.add(team);
-                                                teams.sort(comparing(Team::getAverageRank).reversed());
+                                                teams.sort(comparing(Team::getPoints));
                                             }
-                                            else if (teams.get(0).getAverageRank() > team.getAverageRank()
+                                            else if (teams.get(0).getPoints() < team.getPoints()
                                                     && !teams.contains(team))
                                             {
                                                 teams.remove(0);
                                                 teams.add(team);
-                                                teams.sort(comparing(Team::getAverageRank).reversed());
-//                                                System.out.println(team);
+                                                teams.sort(comparing(Team::getPoints));
                                             }
                                         }
                                     }

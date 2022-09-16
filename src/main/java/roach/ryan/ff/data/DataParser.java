@@ -114,14 +114,14 @@ public class DataParser
     private static void optimize(List<? extends Player> players)
     {
         players.sort(comparing(Player::getPoints).reversed());
-        double avgPoints = 0;//players.stream().mapToDouble(Player::getPoints).average().getAsDouble();
+        double avgPoints = players.stream().mapToDouble(Player::getPoints).average().getAsDouble();
         Iterator<? extends Player> iterator = players.iterator();
         Player current = iterator.next();
         while (iterator.hasNext())
         {
             Player last = current;
             current = iterator.next();
-            if (current.getSalary() > last.getSalary() || current.getRank() > 12)
+            if (current.getSalary() > last.getSalary() || current.getPoints() < avgPoints)
             {
                 iterator.remove();
             }
@@ -130,6 +130,6 @@ public class DataParser
 
     private static void optimizeSkill(List<? extends Player> players)
     {
-        players.removeIf(p -> p.getRank() > 17);
+        players.removeIf(p -> p.getPoints() < 12);
     }
 }

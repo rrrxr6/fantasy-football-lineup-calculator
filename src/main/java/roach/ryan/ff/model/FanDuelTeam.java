@@ -126,8 +126,10 @@ public class FanDuelTeam implements Team
     @Override
     public double getAverageRank()
     {
-        if(averageRank == 0) {
-            averageRank = IntStream.of(qb.getRank(), rb1.getRank(), rb2.getRank(), wr1.getRank(), wr2.getRank(), wr3.getRank(), te.getRank(), flex.getRank(), def.getRank()).average().getAsDouble();
+        if (averageRank == 0)
+        {
+            averageRank = IntStream.of(qb.getRank(), rb1.getRank(), rb2.getRank(), wr1.getRank(), wr2.getRank(),
+                    wr3.getRank(), te.getRank(), flex.getRank(), def.getRank()).average().getAsDouble();
         }
         return averageRank;
     }
