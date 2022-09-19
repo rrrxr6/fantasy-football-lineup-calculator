@@ -1,7 +1,15 @@
-package roach.ryan.ff.model;
+package roach.ryan.ff.fanduel;
 
 import java.util.Set;
 import java.util.stream.IntStream;
+
+import roach.ryan.ff.model.Defense;
+import roach.ryan.ff.model.Flex;
+import roach.ryan.ff.model.Quarterback;
+import roach.ryan.ff.model.RunningBack;
+import roach.ryan.ff.model.Team;
+import roach.ryan.ff.model.TightEnd;
+import roach.ryan.ff.model.WideReceiver;
 
 public class FanDuelTeam implements Team
 {
