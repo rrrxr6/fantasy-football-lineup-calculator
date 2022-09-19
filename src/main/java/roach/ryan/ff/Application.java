@@ -109,28 +109,34 @@ public class Application
     private static void printTopFiveTeams(FreeAgentPool pool)
     {
         List<Team> teams = new ArrayList<>(5);
-        for (Quarterback qb : pool.getQuarterbacks())
+        List<RunningBack> rbs = pool.getRunningBacks();
+        List<WideReceiver> wrs = pool.getWideReceivers();
+        for (Flex flex : pool.getFlexes())
         {
-            for (RunningBack rb1 : pool.getRunningBacks())
+            for (int i = 0; i < rbs.size(); i++)
             {
-                for (RunningBack rb2 : pool.getRunningBacks())
+                RunningBack rb1 = rbs.get(i);
+                for (int j = i + 1; j < rbs.size(); j++)
                 {
-                    for (WideReceiver wr1 : pool.getWideReceivers())
+                    RunningBack rb2 = rbs.get(j);
+                    for (int x = 0; x < wrs.size(); x++)
                     {
-                        for (WideReceiver wr2 : pool.getWideReceivers())
+                        WideReceiver wr1 = wrs.get(x);
+                        for (int y = x + 1; y < wrs.size(); y++)
                         {
-                            for (WideReceiver wr3 : pool.getWideReceivers())
+                            WideReceiver wr2 = wrs.get(y);
+                            for (int z = y + 1; z < wrs.size(); z++)
                             {
-                                for (TightEnd te : pool.getTightEnds())
+                                WideReceiver wr3 = wrs.get(z);
+                                if (rb1.equals(flex) || rb2.equals(flex) || wr1.equals(flex) || wr2.equals(flex)
+                                        || wr3.equals(flex))
                                 {
-                                    for (Flex flex : pool.getFlexes())
+                                    continue;
+                                }
+                                for (Quarterback qb : pool.getQuarterbacks())
+                                {
+                                    for (TightEnd te : pool.getTightEnds())
                                     {
-                                        if (rb1.equals(rb2) || wr1.equals(wr2) || wr1.equals(wr3) || wr2.equals(wr3)
-                                                || rb1.equals(flex) || rb2.equals(flex) || wr1.equals(flex)
-                                                || wr2.equals(flex) || wr3.equals(flex))
-                                        {
-                                            continue;
-                                        }
                                         for (Defense dst : pool.getDefenses())
                                         {
                                             if (sumSalary(qb, rb1, rb2, wr1, wr2, wr3, te, flex, dst) > FanDuelTeam
