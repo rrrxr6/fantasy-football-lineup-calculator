@@ -6,8 +6,6 @@ import static java.util.stream.Collectors.toList;
 import java.io.File;
 import java.math.BigInteger;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -24,6 +22,8 @@ import roach.ryan.ff.model.TopTeams;
 public class Application
 {
 
+    private static final boolean PRINT_PLAYER_INDEXES = false;
+
     public static void main(String[] args)
     {
         DataParser parser = new DataParser(new File(args[0]));
@@ -34,6 +34,12 @@ public class Application
         if (optimizedPool.size().compareTo(new BigInteger("850000000000")) > 0)
         {
             System.out.println("Player pool is too large. Lineup calculator will take over five minutes to complete.");
+            System.exit(0);
+        }
+
+        if (PRINT_PLAYER_INDEXES)
+        {
+            printPlayers(optimizedPool);
             System.exit(0);
         }
 
@@ -62,42 +68,21 @@ public class Application
         }
     }
 
-    private static void printTopTenPointsPerSalaryPerPosition(FreeAgentPool pool)
+    private static void printPlayers(FreeAgentPool pool)
     {
-        printTopTen(pool.getQuarterbacks());
-        printTopTen(pool.getRunningBacks());
-        printTopTen(pool.getWideReceivers());
-        printTopTen(pool.getTightEnds());
-        printTopTen(pool.getDefenses());
+        printPosition(pool.getQuarterbacks());
+        printPosition(pool.getRunningBacks());
+        printPosition(pool.getWideReceivers());
+        printPosition(pool.getTightEnds());
+        printPosition(pool.getDefenses());
     }
 
-    private static void printTopTen(List<? extends Player> players)
+    private static void printPosition(List<? extends Player> players)
     {
-        Collections.sort(players, new Comparator<Player>()
-        {
-
-            @Override
-            public int compare(Player p1, Player p2)
-            {
-                double comparison = p1.getProjectedPoints() / p1.getSalary() - p2.getProjectedPoints() / p2.getSalary();
-                if (comparison > 0)
-                {
-                    return -1;
-                }
-                else if (comparison < 0)
-                {
-                    return 1;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        });
         System.out.println(players.get(0).getClass().getSimpleName());
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < players.size(); i++)
         {
-            System.out.println(i + 1 + ") " + players.get(i).getName());
+            System.out.println("[" + i + "] " + players.get(i).getName());
         }
         System.out.println();
     }
