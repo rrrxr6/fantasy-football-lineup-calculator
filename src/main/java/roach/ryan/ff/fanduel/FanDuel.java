@@ -50,16 +50,16 @@ public class FanDuel
             for (int i = 0; i < rb1s.size(); i++)
             {
                 RunningBack rb1 = rb1s.get(i);
-                for (int j = i + 1; j < rb2s.size(); j++)
+                for (int j = rb2s.size() == 1 ? 0 : i + 1; j < rb2s.size(); j++)
                 {
                     RunningBack rb2 = rb2s.get(j);
                     for (int x = 0; x < wr1s.size(); x++)
                     {
                         WideReceiver wr1 = wr1s.get(x);
-                        for (int y = x + 1; y < wr2s.size(); y++)
+                        for (int y = wr2s.size() == 1 ? 0 : x + 1; y < wr2s.size(); y++)
                         {
                             WideReceiver wr2 = wr2s.get(y);
-                            for (int z = y + 1; z < wr3s.size(); z++)
+                            for (int z = wr3s.size() == 1 ? 0 : y + 1; z < wr3s.size(); z++)
                             {
                                 WideReceiver wr3 = wr3s.get(z);
                                 if (rb1.equals(flex) || rb2.equals(flex) || wr1.equals(flex) || wr2.equals(flex)
@@ -116,10 +116,20 @@ public class FanDuel
             return this;
         }
 
+        public Builder withQuarterback(int index)
+        {
+            return withQuarterback(pool.getQuarterbacks().get(index));
+        }
+
         public Builder withRunningBack1(RunningBack rb1)
         {
             this.rb1 = Collections.singletonList(rb1);
             return this;
+        }
+
+        public Builder withRunningBack1(int index)
+        {
+            return withRunningBack1(pool.getRunningBacks().get(index));
         }
 
         public Builder withRunningBack2(RunningBack rb2)
@@ -128,10 +138,20 @@ public class FanDuel
             return this;
         }
 
+        public Builder withRunningBack2(int index)
+        {
+            return withRunningBack2(pool.getRunningBacks().get(index));
+        }
+
         public Builder withWideReceiver1(WideReceiver wr1)
         {
             this.wr1 = Collections.singletonList(wr1);
             return this;
+        }
+
+        public Builder withWideReceiver1(int index)
+        {
+            return withWideReceiver1(pool.getWideReceivers().get(index));
         }
 
         public Builder withWideReceiver2(WideReceiver wr2)
@@ -140,10 +160,20 @@ public class FanDuel
             return this;
         }
 
+        public Builder withWideReceiver2(int index)
+        {
+            return withWideReceiver2(pool.getWideReceivers().get(index));
+        }
+
         public Builder withWideReceiver3(WideReceiver wr3)
         {
             this.wr3 = Collections.singletonList(wr3);
             return this;
+        }
+
+        public Builder withWideReceiver3(int index)
+        {
+            return withWideReceiver3(pool.getWideReceivers().get(index));
         }
 
         public Builder withTightEnd(TightEnd te)
@@ -152,10 +182,20 @@ public class FanDuel
             return this;
         }
 
+        public Builder withTightEnd(int index)
+        {
+            return withTightEnd(pool.getTightEnds().get(index));
+        }
+
         public Builder withDefense(Defense def)
         {
             this.def = Collections.singletonList(def);
             return this;
+        }
+
+        public Builder withDefense(int index)
+        {
+            return withDefense(pool.getDefenses().get(index));
         }
 
         public FanDuel build()
