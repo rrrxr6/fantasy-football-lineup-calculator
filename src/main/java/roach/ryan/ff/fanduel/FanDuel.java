@@ -14,12 +14,12 @@ import roach.ryan.ff.model.WideReceiver;
 
 public class FanDuel
 {
-    public static TopTeams getTopTeams(FreeAgentPool pool)
+    public static TopTeams getTopTeams(FreeAgentPool pool, List<Flex> flexes)
     {
-        TopTeams teams = new TopTeams(5);
+        TopTeams teams = new TopTeams(100);
         List<RunningBack> rbs = pool.getRunningBacks();
         List<WideReceiver> wrs = pool.getWideReceivers();
-        for (Flex flex : pool.getFlexes())
+        for (Flex flex : flexes)
         {
             for (int i = 0; i < rbs.size(); i++)
             {
