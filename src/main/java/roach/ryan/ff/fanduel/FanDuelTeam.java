@@ -22,10 +22,10 @@ public class FanDuelTeam implements Team
     private final TightEnd te;
     private final Flex flex;
     private final Defense def;
-    private double projectedPoints = 0;
-    private double actualPoints = 0;
     private int salary = 0;
     private double averageRank = 0;
+    private double projectedPoints = 0;
+    private double actualPoints = 0;
 
     public FanDuelTeam(Quarterback qb, RunningBack rb1, RunningBack rb2, WideReceiver wr1, WideReceiver wr2,
             WideReceiver wr3, TightEnd te, Flex flex, Defense def)
@@ -42,18 +42,6 @@ public class FanDuelTeam implements Team
     }
 
     @Override
-    public double getProjectedPoints()
-    {
-        if (projectedPoints == 0)
-        {
-            projectedPoints = qb.getProjectedPoints() + rb1.getProjectedPoints() + rb2.getProjectedPoints()
-                    + wr1.getProjectedPoints() + wr2.getProjectedPoints() + wr3.getProjectedPoints()
-                    + te.getProjectedPoints() + flex.getProjectedPoints() + def.getProjectedPoints();
-        }
-        return projectedPoints;
-    }
-
-    @Override
     public int getSalary()
     {
         if (salary == 0)
@@ -65,75 +53,6 @@ public class FanDuelTeam implements Team
     }
 
     @Override
-    public String toString()
-    {
-        StringBuilder sb = new StringBuilder("Points: ");
-        sb.append(getProjectedPoints());
-        sb.append(" - Salary: ");
-        sb.append(getSalary());
-        sb.append(" - Avg Rank: ");
-        sb.append(getAverageRank());
-        sb.append("\n");
-
-        sb.append(qb);
-        sb.append("\n");
-
-        sb.append(rb1);
-        sb.append("\n");
-        sb.append(rb2);
-        sb.append("\n");
-
-        sb.append(wr1);
-        sb.append("\n");
-        sb.append(wr2);
-        sb.append("\n");
-        sb.append(wr3);
-        sb.append("\n");
-
-        sb.append(te);
-        sb.append("\n");
-
-        sb.append(flex);
-        sb.append("\n");
-
-        sb.append(def);
-        sb.append("\n");
-
-        return sb.toString();
-    }
-
-    public static int getSalaryCap()
-    {
-        return 60000;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((def == null) ? 0 : def.hashCode());
-        result = prime * result + ((flex == null) ? 0 : flex.hashCode());
-        result = prime * result + ((qb == null) ? 0 : qb.hashCode());
-        result = prime * result + ((rb1 == null) ? 0 : rb1.hashCode());
-        result = prime * result + ((rb2 == null) ? 0 : rb2.hashCode());
-        result = prime * result + ((te == null) ? 0 : te.hashCode());
-        result = prime * result + ((wr1 == null) ? 0 : wr1.hashCode());
-        result = prime * result + ((wr2 == null) ? 0 : wr2.hashCode());
-        result = prime * result + ((wr3 == null) ? 0 : wr3.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        FanDuelTeam other = (FanDuelTeam) obj;
-        return Set.of(qb, rb1, rb2, wr1, wr2, wr3, te, def, flex).equals(Set.of(other.qb, other.rb1, other.rb2,
-                other.wr1, other.wr2, other.wr3, other.te, other.def, other.flex));
-
-    }
-
-    @Override
     public double getAverageRank()
     {
         if (averageRank == 0)
@@ -142,6 +61,18 @@ public class FanDuelTeam implements Team
                     wr3.getRank(), te.getRank(), flex.getRank(), def.getRank()).average().getAsDouble();
         }
         return averageRank;
+    }
+
+    @Override
+    public double getProjectedPoints()
+    {
+        if (projectedPoints == 0)
+        {
+            projectedPoints = qb.getProjectedPoints() + rb1.getProjectedPoints() + rb2.getProjectedPoints()
+                    + wr1.getProjectedPoints() + wr2.getProjectedPoints() + wr3.getProjectedPoints()
+                    + te.getProjectedPoints() + flex.getProjectedPoints() + def.getProjectedPoints();
+        }
+        return projectedPoints;
     }
 
     @Override
@@ -186,4 +117,72 @@ public class FanDuelTeam implements Team
         return sb.toString();
     }
 
+    @Override
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder("Points: ");
+        sb.append(getProjectedPoints());
+        sb.append(" - Salary: ");
+        sb.append(getSalary());
+        sb.append(" - Avg Rank: ");
+        sb.append(getAverageRank());
+        sb.append("\n");
+
+        sb.append(qb);
+        sb.append("\n");
+
+        sb.append(rb1);
+        sb.append("\n");
+        sb.append(rb2);
+        sb.append("\n");
+
+        sb.append(wr1);
+        sb.append("\n");
+        sb.append(wr2);
+        sb.append("\n");
+        sb.append(wr3);
+        sb.append("\n");
+
+        sb.append(te);
+        sb.append("\n");
+
+        sb.append(flex);
+        sb.append("\n");
+
+        sb.append(def);
+        sb.append("\n");
+
+        return sb.toString();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((qb == null) ? 0 : qb.hashCode());
+        result = prime * result + ((rb1 == null) ? 0 : rb1.hashCode());
+        result = prime * result + ((rb2 == null) ? 0 : rb2.hashCode());
+        result = prime * result + ((wr1 == null) ? 0 : wr1.hashCode());
+        result = prime * result + ((wr2 == null) ? 0 : wr2.hashCode());
+        result = prime * result + ((wr3 == null) ? 0 : wr3.hashCode());
+        result = prime * result + ((te == null) ? 0 : te.hashCode());
+        result = prime * result + ((flex == null) ? 0 : flex.hashCode());
+        result = prime * result + ((def == null) ? 0 : def.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        FanDuelTeam other = (FanDuelTeam) obj;
+        return Set.of(qb, rb1, rb2, wr1, wr2, wr3, te, flex, def).equals(Set.of(other.qb, other.rb1, other.rb2,
+                other.wr1, other.wr2, other.wr3, other.te, other.flex, other.def));
+
+    }
+
+    public static int getSalaryCap()
+    {
+        return 60000;
+    }
 }

@@ -2,13 +2,13 @@ package roach.ryan.ff.model;
 
 public interface Team
 {
-    double getProjectedPoints();
-
-    double getActualPoints();
-
     int getSalary();
 
     double getAverageRank();
+
+    double getProjectedPoints();
+
+    double getActualPoints();
 
     String toStringCsv();
 }

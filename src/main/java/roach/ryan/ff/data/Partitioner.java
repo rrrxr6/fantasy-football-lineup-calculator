@@ -21,5 +21,4 @@ public class Partitioner
         return list.stream().collect(groupingBy(foo -> counter.getAndIncrement() / (list.size() / numberOfPartitions)))
                 .values();
     }
-
 }
