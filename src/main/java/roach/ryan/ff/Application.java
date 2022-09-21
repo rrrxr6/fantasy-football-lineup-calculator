@@ -37,9 +37,10 @@ public class Application
             System.exit(0);
         }
 
+        FanDuel fanDuel = new FanDuel.Builder(optimizedPool).build();
         Collection<List<Flex>> flexPartitions = new Partitioner(4).getPartitions(optimizedPool.getFlexes());
         List<CompletableFuture<List<Team>>> futures = flexPartitions.stream()
-                .map(flexes -> CompletableFuture.supplyAsync(() -> FanDuel.getTopTeams(optimizedPool, flexes)))
+                .map(flexes -> CompletableFuture.supplyAsync(() -> fanDuel.getTopTeams(flexes)))
                 .map(future -> future.thenApply(TopTeams::getTeams)).collect(toList());
         CompletableFuture<List<List<Team>>> combinedFutures = CompletableFuture
                 .allOf(futures.toArray(new CompletableFuture[futures.size()]))
