@@ -48,7 +48,7 @@ public class FanDuel
         TopTeams teams = new TopTeams(100);
         for (Flex flex : flexes)
         {
-            System.out.print("("+COUNT.getAndIncrement()+"/"+progress+")\r");
+            System.out.print("(" + COUNT.getAndIncrement() + "/" + progress + ")\r");
             for (int i = 0; i < rb1s.size(); i++)
             {
                 RunningBack rb1 = rb1s.get(i);

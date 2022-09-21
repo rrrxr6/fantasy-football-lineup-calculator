@@ -6,16 +6,16 @@ public abstract class Player
 {
     private final String name;
     private final int salary;
+    private final int rank;
     private final double projectedPoints;
     private final double actualPoints;
-    private final int rank;
 
-    public Player(String name, int salary, double projectedPoints, double actualPoints, int rank)
+    public Player(String name, int salary, int rank, double projectedPoints, double actualPoints)
     {
         this.name = name;
         this.salary = salary;
-        this.projectedPoints = projectedPoints;
         this.rank = rank;
+        this.projectedPoints = projectedPoints;
         this.actualPoints = actualPoints;
     }
 
@@ -27,6 +27,11 @@ public abstract class Player
     public int getSalary()
     {
         return salary;
+    }
+
+    public int getRank()
+    {
+        return rank;
     }
 
     public double getProjectedPoints()
@@ -65,10 +70,5 @@ public abstract class Player
         return Objects.equals(name, other.name)
                 && Double.doubleToLongBits(projectedPoints) == Double.doubleToLongBits(other.projectedPoints)
                 && salary == other.salary;
-    }
-
-    public int getRank()
-    {
-        return rank;
     }
 }

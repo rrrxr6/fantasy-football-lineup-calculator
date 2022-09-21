@@ -17,17 +17,17 @@ public class FreeAgentPool
     private final List<WideReceiver> wrs;
     private final List<TightEnd> tes;
     private final List<Flex> flexes;
-    private final List<Defense> dsts;
+    private final List<Defense> defs;
 
     public FreeAgentPool(List<Quarterback> qbs, List<RunningBack> rbs, List<WideReceiver> wrs, List<TightEnd> tes,
-            List<Defense> dsts, List<Flex> flexes)
+            List<Flex> flexes, List<Defense> defs)
     {
         this.qbs = qbs;
         this.rbs = rbs;
         this.wrs = wrs;
         this.tes = tes;
-        this.dsts = dsts;
         this.flexes = flexes;
+        this.defs = defs;
     }
 
     public List<Quarterback> getQuarterbacks()
@@ -58,7 +58,7 @@ public class FreeAgentPool
 
     public List<Defense> getDefenses()
     {
-        return dsts;
+        return defs;
     }
 
     public BigInteger size()
@@ -67,9 +67,9 @@ public class FreeAgentPool
         BigInteger rbCount = BigInteger.valueOf(rbs.size());
         BigInteger wrCount = BigInteger.valueOf(wrs.size());
         BigInteger teCount = BigInteger.valueOf(tes.size());
-        BigInteger defCount = BigInteger.valueOf(dsts.size());
         BigInteger flexCount = BigInteger.valueOf(flexes.size());
+        BigInteger defCount = BigInteger.valueOf(defs.size());
         return qbCount.multiply(rbCount).multiply(rbCount).multiply(wrCount).multiply(wrCount).multiply(wrCount)
-                .multiply(defCount).multiply(flexCount).multiply(teCount);
+                .multiply(teCount).multiply(flexCount).multiply(defCount);
     }
 }

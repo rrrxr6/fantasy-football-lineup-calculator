@@ -21,7 +21,6 @@ import roach.ryan.ff.model.TopTeams;
 
 public class Application
 {
-
     private static final boolean PRINT_PLAYER_INDEXES = false;
 
     public static void main(String[] args)
@@ -29,7 +28,7 @@ public class Application
         DataParser parser = new DataParser(new File(args[0]));
         parser.optimize();
         FreeAgentPool optimizedPool = new FreeAgentPool(parser.getQuarterbacks(), parser.getRunningBacks(),
-                parser.getWideReceivers(), parser.getTightEnds(), parser.getDefenses(), parser.getFlexes());
+                parser.getWideReceivers(), parser.getTightEnds(), parser.getFlexes(), parser.getDefenses());
 
         if (optimizedPool.size().compareTo(new BigInteger("850000000000")) > 0)
         {

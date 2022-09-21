@@ -23,8 +23,8 @@ public class DataParser
     private final List<RunningBack> rbs = new ArrayList<>();
     private final List<WideReceiver> wrs = new ArrayList<>();
     private final List<TightEnd> tes = new ArrayList<>();
-    private final List<Defense> dsts = new ArrayList<>();
     private final List<Flex> flexes = new ArrayList<>();
+    private final List<Defense> defs = new ArrayList<>();
 
     public DataParser(File file)
     {
@@ -43,19 +43,19 @@ public class DataParser
                 switch (position)
                 {
                     case "QB":
-                        qbs.add(new Quarterback(name, salary, projectedPoints, actualPoints, rank));
+                        qbs.add(new Quarterback(name, salary, rank, projectedPoints, actualPoints));
                         break;
                     case "RB":
-                        rbs.add(new RunningBack(name, salary, projectedPoints, actualPoints, rank));
+                        rbs.add(new RunningBack(name, salary, rank, projectedPoints, actualPoints));
                         break;
                     case "WR":
-                        wrs.add(new WideReceiver(name, salary, projectedPoints, actualPoints, rank));
+                        wrs.add(new WideReceiver(name, salary, rank, projectedPoints, actualPoints));
                         break;
                     case "TE":
-                        tes.add(new TightEnd(name, salary, projectedPoints, actualPoints, rank));
+                        tes.add(new TightEnd(name, salary, rank, projectedPoints, actualPoints));
                         break;
                     case "ST":
-                        dsts.add(new Defense(name, salary, projectedPoints, actualPoints, rank));
+                        defs.add(new Defense(name, salary, rank, projectedPoints, actualPoints));
                         break;
                     default:
                         throw new RuntimeException("unrecognized position");
@@ -74,12 +74,12 @@ public class DataParser
 
     public void optimize()
     {
-        optimizeSkill(flexes);
         optimize(qbs);
         optimizeSkill(rbs);
         optimizeSkill(wrs);
         optimize(tes);
-        optimize(dsts);
+        optimizeSkill(flexes);
+        optimize(defs);
     }
 
     public List<Quarterback> getQuarterbacks()
@@ -102,14 +102,14 @@ public class DataParser
         return tes;
     }
 
-    public List<Defense> getDefenses()
-    {
-        return dsts;
-    }
-
     public List<Flex> getFlexes()
     {
         return flexes;
+    }
+
+    public List<Defense> getDefenses()
+    {
+        return defs;
     }
 
     private static void optimize(List<? extends Player> players)
