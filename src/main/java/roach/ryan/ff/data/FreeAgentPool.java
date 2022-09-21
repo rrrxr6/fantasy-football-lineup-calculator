@@ -1,5 +1,6 @@
 package roach.ryan.ff.data;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import roach.ryan.ff.model.Defense;
@@ -58,5 +59,17 @@ public class FreeAgentPool
     public List<Defense> getDefenses()
     {
         return dsts;
+    }
+
+    public BigInteger size()
+    {
+        BigInteger qbCount = BigInteger.valueOf(qbs.size());
+        BigInteger rbCount = BigInteger.valueOf(rbs.size());
+        BigInteger wrCount = BigInteger.valueOf(wrs.size());
+        BigInteger teCount = BigInteger.valueOf(tes.size());
+        BigInteger defCount = BigInteger.valueOf(dsts.size());
+        BigInteger flexCount = BigInteger.valueOf(flexes.size());
+        return qbCount.multiply(rbCount).multiply(rbCount).multiply(wrCount).multiply(wrCount).multiply(wrCount)
+                .multiply(defCount).multiply(flexCount).multiply(teCount);
     }
 }

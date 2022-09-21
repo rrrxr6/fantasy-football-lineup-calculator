@@ -1,15 +1,22 @@
 package roach.ryan.ff;
 
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
+
 import java.io.File;
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import roach.ryan.ff.data.DataParser;
 import roach.ryan.ff.data.FreeAgentPool;
+import roach.ryan.ff.data.Partitioner;
 import roach.ryan.ff.fanduel.FanDuel;
+import roach.ryan.ff.model.Flex;
 import roach.ryan.ff.model.Player;
 import roach.ryan.ff.model.Team;
 import roach.ryan.ff.model.TopTeams;
@@ -24,38 +31,34 @@ public class Application
         FreeAgentPool optimizedPool = new FreeAgentPool(parser.getQuarterbacks(), parser.getRunningBacks(),
                 parser.getWideReceivers(), parser.getTightEnds(), parser.getDefenses(), parser.getFlexes());
 
-        if (isPoolSizeTooLarge(optimizedPool))
+        if (optimizedPool.size().compareTo(new BigInteger("850000000000")) > 0)
         {
             System.out.println("Player pool is too large. Lineup calculator will take over five minutes to complete.");
             System.exit(0);
         }
 
-        TopTeams teams = FanDuel.getTopTeams(optimizedPool);
-        if (teams.getTeams().isEmpty())
+        Collection<List<Flex>> flexPartitions = new Partitioner(4).getPartitions(optimizedPool.getFlexes());
+        List<CompletableFuture<List<Team>>> futures = flexPartitions.stream()
+                .map(flexes -> CompletableFuture.supplyAsync(() -> FanDuel.getTopTeams(optimizedPool, flexes)))
+                .map(future -> future.thenApply(TopTeams::getTeams)).collect(toList());
+        CompletableFuture<List<List<Team>>> combinedFutures = CompletableFuture
+                .allOf(futures.toArray(new CompletableFuture[futures.size()]))
+                .thenApply(v -> futures.stream().map(CompletableFuture::join).collect(toList()));
+        List<Team> teams = combinedFutures.join().stream().flatMap(List::stream)
+                .sorted(comparing(Team::getProjectedPoints)).collect(toList());
+
+        if (teams.isEmpty())
         {
             System.out.println("No valid teams can be made from the pool.");
         }
 
-        int i = 5;
-        Iterator<Team> it = teams.getTeams().iterator();
+        int i = teams.size();
+        Iterator<Team> it = teams.iterator();
         while (it.hasNext())
         {
             System.out.println("#" + i--);
             System.out.println(it.next());
         }
-    }
-
-    private static boolean isPoolSizeTooLarge(FreeAgentPool pool)
-    {
-        BigInteger qbCount = BigInteger.valueOf(pool.getQuarterbacks().size());
-        BigInteger rbCount = BigInteger.valueOf(pool.getRunningBacks().size());
-        BigInteger wrCount = BigInteger.valueOf(pool.getWideReceivers().size());
-        BigInteger teCount = BigInteger.valueOf(pool.getTightEnds().size());
-        BigInteger defCount = BigInteger.valueOf(pool.getDefenses().size());
-        BigInteger flexCount = BigInteger.valueOf(pool.getFlexes().size());
-        BigInteger combos = qbCount.multiply(rbCount).multiply(rbCount).multiply(wrCount).multiply(wrCount)
-                .multiply(wrCount).multiply(defCount).multiply(flexCount).multiply(teCount);
-        return combos.compareTo(new BigInteger("300000000000")) > 0;
     }
 
     private static void printTopTenPointsPerSalaryPerPosition(FreeAgentPool pool)
