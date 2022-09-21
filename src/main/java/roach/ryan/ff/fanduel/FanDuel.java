@@ -26,19 +26,21 @@ public class FanDuel
     private final List<WideReceiver> wr3s;
     private final List<TightEnd> tes;
     private final List<Defense> defs;
+    private final int progress;
 
-    private FanDuel(FreeAgentPool pool, List<Quarterback> forcedQb, List<RunningBack> forcedRb1,
-            List<RunningBack> forcedRb2, List<WideReceiver> forcedWr1, List<WideReceiver> forcedWr2,
-            List<WideReceiver> forcedWr3, List<TightEnd> forcedTe, List<Defense> forcedDef)
+    private FanDuel(FreeAgentPool pool, List<Quarterback> overrideQb, List<RunningBack> overrideRb1,
+            List<RunningBack> overrideRb2, List<WideReceiver> overrideWr1, List<WideReceiver> overrideWr2,
+            List<WideReceiver> overrideWr3, List<TightEnd> overrideTe, List<Defense> overrideDef)
     {
-        this.qbs = Optional.ofNullable(forcedQb).orElse(pool.getQuarterbacks());
-        this.rb1s = Optional.ofNullable(forcedRb1).orElse(pool.getRunningBacks());
-        this.rb2s = Optional.ofNullable(forcedRb2).orElse(pool.getRunningBacks());
-        this.wr1s = Optional.ofNullable(forcedWr1).orElse(pool.getWideReceivers());
-        this.wr2s = Optional.ofNullable(forcedWr2).orElse(pool.getWideReceivers());
-        this.wr3s = Optional.ofNullable(forcedWr3).orElse(pool.getWideReceivers());
-        this.tes = Optional.ofNullable(forcedTe).orElse(pool.getTightEnds());
-        this.defs = Optional.ofNullable(forcedDef).orElse(pool.getDefenses());
+        qbs = Optional.ofNullable(overrideQb).orElse(pool.getQuarterbacks());
+        rb1s = Optional.ofNullable(overrideRb1).orElse(pool.getRunningBacks());
+        rb2s = Optional.ofNullable(overrideRb2).orElse(pool.getRunningBacks());
+        wr1s = Optional.ofNullable(overrideWr1).orElse(pool.getWideReceivers());
+        wr2s = Optional.ofNullable(overrideWr2).orElse(pool.getWideReceivers());
+        wr3s = Optional.ofNullable(overrideWr3).orElse(pool.getWideReceivers());
+        tes = Optional.ofNullable(overrideTe).orElse(pool.getTightEnds());
+        defs = Optional.ofNullable(overrideDef).orElse(pool.getDefenses());
+        progress = pool.getFlexes().size();
     }
 
     public TopTeams getTopTeams(List<Flex> flexes)
@@ -46,7 +48,7 @@ public class FanDuel
         TopTeams teams = new TopTeams(100);
         for (Flex flex : flexes)
         {
-            System.out.println(COUNT.getAndIncrement());
+            System.out.print("("+COUNT.getAndIncrement()+"/"+progress+")\r");
             for (int i = 0; i < rb1s.size(); i++)
             {
                 RunningBack rb1 = rb1s.get(i);

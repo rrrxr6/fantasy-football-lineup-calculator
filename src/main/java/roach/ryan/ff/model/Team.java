@@ -9,4 +9,6 @@ public interface Team
     int getSalary();
 
     double getAverageRank();
+
+    String toStringCsv();
 }

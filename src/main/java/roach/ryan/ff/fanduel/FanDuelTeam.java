@@ -156,4 +156,34 @@ public class FanDuelTeam implements Team
         return actualPoints;
     }
 
+    @Override
+    public String toStringCsv()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getAverageRank());
+        sb.append(",");
+        sb.append(getProjectedPoints());
+        sb.append(",");
+        sb.append(getActualPoints());
+        sb.append(",");
+        sb.append(qb.getRank());
+        sb.append(",");
+        sb.append(rb1.getRank());
+        sb.append(",");
+        sb.append(rb2.getRank());
+        sb.append(",");
+        sb.append(wr1.getRank());
+        sb.append(",");
+        sb.append(wr2.getRank());
+        sb.append(",");
+        sb.append(wr3.getRank());
+        sb.append(",");
+        sb.append(te.getRank());
+        sb.append(",");
+        sb.append(flex.getRank());
+        sb.append(",");
+        sb.append(def.getRank());
+        return sb.toString();
+    }
+
 }
