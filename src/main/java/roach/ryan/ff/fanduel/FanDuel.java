@@ -63,7 +63,8 @@ public class FanDuel
                             {
                                 WideReceiver wr3 = wr3s.get(z);
                                 if (rb1.equals(flex) || rb2.equals(flex) || wr1.equals(flex) || wr2.equals(flex)
-                                        || wr3.equals(flex))
+                                        || wr3.equals(flex) || rb1.equals(rb2) || wr1.equals(wr2) || wr1.equals(wr3)
+                                        || wr2.equals(wr3))
                                 {
                                     continue;
                                 }
