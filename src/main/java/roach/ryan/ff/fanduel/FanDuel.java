@@ -45,7 +45,7 @@ public class FanDuel
 
     public TopTeams getTopTeams(List<Flex> flexes)
     {
-        TopTeams teams = new TopTeams(100);
+        TopTeams teams = new TopTeams(1000);
         for (Flex flex : flexes)
         {
             System.out.print("(" + COUNT.getAndIncrement() + "/" + progress + ")\r");

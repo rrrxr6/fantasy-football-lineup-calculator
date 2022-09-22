@@ -46,7 +46,7 @@ public class TopTeams
 
     private boolean isTopTeam(Team team)
     {
-        return team.getProjectedPoints() > teams.get(0).getProjectedPoints();
+        return COMPARATOR.compare(team, teams.get(0)) > 0;
     }
 
     private boolean notFull()

@@ -120,12 +120,18 @@ public class FanDuelTeam implements Team
     @Override
     public String toString()
     {
-        StringBuilder sb = new StringBuilder("Points: ");
-        sb.append(getProjectedPoints());
-        sb.append(" - Salary: ");
+        StringBuilder sb = new StringBuilder("Projected Points: ");
+        sb.append(String.format("%.2f", getProjectedPoints()));
+        if (getActualPoints() > 0)
+        {
+            sb.append(" - Actual Points: ");
+            sb.append(String.format("%.2f", getActualPoints()));
+        }
+        sb.append("\n");
+        sb.append("Salary: ");
         sb.append(getSalary());
         sb.append(" - Avg Rank: ");
-        sb.append(getAverageRank());
+        sb.append(String.format("%.2f", getAverageRank()));
         sb.append("\n");
 
         sb.append(qb);
