@@ -1,5 +1,6 @@
 package roach.ryan.ff.fanduel;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -164,18 +165,7 @@ public class FanDuelTeam implements Team
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((qb == null) ? 0 : qb.hashCode());
-        result = prime * result + ((rb1 == null) ? 0 : rb1.hashCode());
-        result = prime * result + ((rb2 == null) ? 0 : rb2.hashCode());
-        result = prime * result + ((wr1 == null) ? 0 : wr1.hashCode());
-        result = prime * result + ((wr2 == null) ? 0 : wr2.hashCode());
-        result = prime * result + ((wr3 == null) ? 0 : wr3.hashCode());
-        result = prime * result + ((te == null) ? 0 : te.hashCode());
-        result = prime * result + ((flex == null) ? 0 : flex.hashCode());
-        result = prime * result + ((def == null) ? 0 : def.hashCode());
-        return result;
+        return Objects.hash(Set.of(qb, rb1, rb2, wr1, wr2, wr3, te, flex, def));
     }
 
     @Override

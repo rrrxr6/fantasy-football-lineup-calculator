@@ -50,7 +50,7 @@ public class Application
         CompletableFuture<List<List<Team>>> combinedFutures = CompletableFuture
                 .allOf(futures.toArray(new CompletableFuture[futures.size()]))
                 .thenApply(v -> futures.stream().map(CompletableFuture::join).collect(toList()));
-        List<Team> teams = combinedFutures.join().stream().flatMap(List::stream)
+        List<Team> teams = combinedFutures.join().stream().flatMap(List::stream).distinct()
                 .sorted(comparing(Team::getAverageRank).reversed()).collect(toList());
 
         if (teams.isEmpty())
