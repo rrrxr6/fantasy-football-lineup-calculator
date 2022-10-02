@@ -1,6 +1,7 @@
 package roach.ryan.ff.fanduel;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -11,6 +12,7 @@ import roach.ryan.ff.model.Flex;
 import roach.ryan.ff.model.Player;
 import roach.ryan.ff.model.Quarterback;
 import roach.ryan.ff.model.RunningBack;
+import roach.ryan.ff.model.Team;
 import roach.ryan.ff.model.TightEnd;
 import roach.ryan.ff.model.TopTeams;
 import roach.ryan.ff.model.WideReceiver;
@@ -43,9 +45,9 @@ public class FanDuel
         progress = pool.getFlexes().size();
     }
 
-    public TopTeams getTopTeams(List<Flex> flexes)
+    public TopTeams getTopTeams(List<Flex> flexes, Comparator<Team> comparator)
     {
-        TopTeams teams = new TopTeams(1000);
+        TopTeams teams = new TopTeams(10, comparator);
         for (Flex flex : flexes)
         {
             System.out.print("(" + COUNT.getAndIncrement() + "/" + progress + ")\r");

@@ -6,6 +6,7 @@ import static java.util.stream.Collectors.toList;
 import java.io.File;
 import java.math.BigInteger;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -42,16 +43,17 @@ public class Application
             System.exit(0);
         }
 
+        Comparator<Team> comparator = comparing(Team::getMetric);
         FanDuel fanDuel = new FanDuel.Builder(optimizedPool).build();
         Collection<List<Flex>> flexPartitions = new Partitioner(4).getPartitions(optimizedPool.getFlexes());
         List<CompletableFuture<List<Team>>> futures = flexPartitions.stream()
-                .map(flexes -> CompletableFuture.supplyAsync(() -> fanDuel.getTopTeams(flexes)))
+                .map(flexes -> CompletableFuture.supplyAsync(() -> fanDuel.getTopTeams(flexes, comparator)))
                 .map(future -> future.thenApply(TopTeams::getTeams)).collect(toList());
         CompletableFuture<List<List<Team>>> combinedFutures = CompletableFuture
                 .allOf(futures.toArray(new CompletableFuture[futures.size()]))
                 .thenApply(v -> futures.stream().map(CompletableFuture::join).collect(toList()));
-        List<Team> teams = combinedFutures.join().stream().flatMap(List::stream).distinct()
-                .sorted(comparing(Team::getAverageRank).reversed()).collect(toList());
+        List<Team> teams = combinedFutures.join().stream().flatMap(List::stream).distinct().sorted(comparator)
+                .collect(toList());
 
         if (teams.isEmpty())
         {

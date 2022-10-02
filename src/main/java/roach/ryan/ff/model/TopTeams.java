@@ -1,7 +1,6 @@
 package roach.ryan.ff.model;
 
 import static java.util.Collections.binarySearch;
-import static java.util.Comparator.comparing;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -9,13 +8,14 @@ import java.util.List;
 
 public class TopTeams
 {
-    private final static Comparator<Team> COMPARATOR = comparing(Team::getProjectedPoints);
+    private final Comparator<Team> comparator;
     private final int capacity;
     private final List<Team> teams;
 
-    public TopTeams(int capacity)
+    public TopTeams(int capacity, Comparator<Team> comparator)
     {
         this.capacity = capacity;
+        this.comparator = comparator;
         this.teams = new ArrayList<>(capacity);
     }
 
@@ -39,14 +39,14 @@ public class TopTeams
 
     private void addInOrder(Team team)
     {
-        int index = binarySearch(teams, team, COMPARATOR);
+        int index = binarySearch(teams, team, comparator);
         index = index >= 0 ? index : -1 * index - 1;
         teams.add(index, team);
     }
 
     private boolean isTopTeam(Team team)
     {
-        return COMPARATOR.compare(team, teams.get(0)) > 0;
+        return comparator.compare(team, teams.get(0)) > 0;
     }
 
     private boolean notFull()
