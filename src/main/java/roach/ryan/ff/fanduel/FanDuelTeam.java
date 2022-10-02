@@ -27,6 +27,7 @@ public class FanDuelTeam implements Team
     private double averageRank = 0;
     private double projectedPoints = 0;
     private double actualPoints = 0;
+    private double metric = 0;
 
     public FanDuelTeam(Quarterback qb, RunningBack rb1, RunningBack rb2, WideReceiver wr1, WideReceiver wr2,
             WideReceiver wr3, TightEnd te, Flex flex, Defense def)
@@ -86,6 +87,16 @@ public class FanDuelTeam implements Team
                     + def.getActualPoints();
         }
         return actualPoints;
+    }
+
+    @Override
+    public double getMetric()
+    {
+        if (metric == 0)
+        {
+            metric = 4 * getProjectedPoints() - getAverageRank();
+        }
+        return metric;
     }
 
     @Override

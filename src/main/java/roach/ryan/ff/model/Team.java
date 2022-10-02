@@ -10,5 +10,7 @@ public interface Team
 
     double getActualPoints();
 
+    double getMetric();
+
     String toStringCsv();
 }
