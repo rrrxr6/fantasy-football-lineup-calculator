@@ -94,7 +94,7 @@ public class FanDuelTeam implements Team
     {
         if (metric == 0)
         {
-            metric = 4 * getProjectedPoints() - getAverageRank();
+            metric = 1.5 * getProjectedPoints() - getAverageRank();
         }
         return metric;
     }

@@ -60,13 +60,8 @@ public class Application
             System.out.println("No valid teams can be made from the pool.");
         }
 
-        int i = teams.size();
-        Iterator<Team> it = teams.iterator();
-        while (it.hasNext())
-        {
-            System.out.println("#" + i--);
-            System.out.println(it.next());
-        }
+        printTeams(teams);
+        // printAverageOfTopTen(teams);
     }
 
     private static void printPlayers(FreeAgentPool pool)
@@ -86,5 +81,22 @@ public class Application
             System.out.println("[" + i + "] " + players.get(i).getName());
         }
         System.out.println();
+    }
+
+    private static void printAverageOfTopTen(List<Team> teams)
+    {
+        teams.subList(0, teams.size() - 10).clear();
+        System.out.println(teams.stream().mapToDouble(Team::getActualPoints).average().getAsDouble());
+    }
+
+    private static void printTeams(List<Team> teams)
+    {
+        int i = teams.size();
+        Iterator<Team> it = teams.iterator();
+        while (it.hasNext())
+        {
+            System.out.println("#" + i--);
+            System.out.println(it.next());
+        }
     }
 }
