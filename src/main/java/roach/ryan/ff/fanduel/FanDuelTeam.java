@@ -2,7 +2,6 @@ package roach.ryan.ff.fanduel;
 
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 import roach.ryan.ff.model.Defense;
 import roach.ryan.ff.model.Flex;
@@ -59,8 +58,8 @@ public class FanDuelTeam implements Team
     {
         if (averageRank == 0)
         {
-            averageRank = IntStream.of(qb.getRank(), rb1.getRank(), rb2.getRank(), wr1.getRank(), wr2.getRank(),
-                    wr3.getRank(), te.getRank(), flex.getRank(), def.getRank()).average().getAsDouble();
+            averageRank = (qb.getRank() + rb1.getRank() + rb2.getRank() + wr1.getRank() + wr2.getRank() + wr3.getRank()
+                    + te.getRank() + flex.getRank() + def.getRank()) / 9.0;
         }
         return averageRank;
     }
