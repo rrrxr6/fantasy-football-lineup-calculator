@@ -15,26 +15,17 @@ import roach.ryan.ff.data.FreeAgentPool;
 import roach.ryan.ff.data.Partitioner;
 import roach.ryan.ff.fanduel.FanDuel;
 import roach.ryan.ff.model.Flex;
-import roach.ryan.ff.model.Player;
 import roach.ryan.ff.model.Team;
 import roach.ryan.ff.model.TopTeams;
 
-public class Application
+public class CsvResults
 {
-    private static final boolean PRINT_PLAYER_INDEXES = false;
-
     public static void main(String[] args)
     {
         DataParser parser = new DataParser(new File(args[0]));
         parser.optimize();
         FreeAgentPool optimizedPool = new FreeAgentPool(parser.getQuarterbacks(), parser.getRunningBacks(),
                 parser.getWideReceivers(), parser.getTightEnds(), parser.getFlexes(), parser.getDefenses());
-
-        if (PRINT_PLAYER_INDEXES)
-        {
-            printPlayers(optimizedPool);
-            System.exit(0);
-        }
 
         Comparator<Team> comparator = comparing(Team::getMetric);
         FanDuel fanDuel = new FanDuel.Builder(optimizedPool).build();
@@ -57,25 +48,6 @@ public class Application
         // printAverageOfTopTen(teams);
     }
 
-    private static void printPlayers(FreeAgentPool pool)
-    {
-        printPosition(pool.getQuarterbacks());
-        printPosition(pool.getRunningBacks());
-        printPosition(pool.getWideReceivers());
-        printPosition(pool.getTightEnds());
-        printPosition(pool.getDefenses());
-    }
-
-    private static void printPosition(List<? extends Player> players)
-    {
-        System.out.println(players.get(0).getClass().getSimpleName());
-        for (int i = 0; i < players.size(); i++)
-        {
-            System.out.println("[" + i + "] " + players.get(i).getName());
-        }
-        System.out.println();
-    }
-
     private static void printAverageOfTopTen(List<Team> teams)
     {
         teams.subList(0, teams.size() - 10).clear();
@@ -84,12 +56,10 @@ public class Application
 
     private static void printTeams(List<Team> teams)
     {
-        int i = teams.size();
         Iterator<Team> it = teams.iterator();
         while (it.hasNext())
         {
-            System.out.println("#" + i--);
-            System.out.println(it.next());
+            System.out.println(it.next().toStringCsv());
         }
     }
 }
