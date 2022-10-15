@@ -1,5 +1,6 @@
 package roach.ryan.ff.fanduel;
 
+import java.math.BigInteger;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -47,6 +48,12 @@ public class FanDuel
 
     public TopTeams getTopTeams(List<Flex> flexes, Comparator<Team> comparator)
     {
+        if (size(flexes).compareTo(new BigInteger("50000000000")) > 0)
+        {
+            System.out.println("Player pool is too large. Lineup calculator will take over five minutes to complete.");
+            System.exit(0);
+        }
+
         TopTeams teams = new TopTeams(50, comparator);
         for (Flex flex : flexes)
         {
@@ -95,6 +102,21 @@ public class FanDuel
             }
         }
         return teams;
+    }
+
+    private BigInteger size(List<Flex> flexes)
+    {
+        BigInteger qbCount = BigInteger.valueOf(qbs.size());
+        BigInteger rb1Count = BigInteger.valueOf(rb1s.size());
+        BigInteger rb2Count = BigInteger.valueOf(rb2s.size());
+        BigInteger wr1Count = BigInteger.valueOf(wr1s.size());
+        BigInteger wr2Count = BigInteger.valueOf(wr2s.size());
+        BigInteger wr3Count = BigInteger.valueOf(wr3s.size());
+        BigInteger teCount = BigInteger.valueOf(tes.size());
+        BigInteger flexCount = BigInteger.valueOf(flexes.size());
+        BigInteger defCount = BigInteger.valueOf(defs.size());
+        return qbCount.multiply(rb1Count).multiply(rb2Count).multiply(wr1Count).multiply(wr2Count).multiply(wr3Count)
+                .multiply(teCount).multiply(flexCount).multiply(defCount);
     }
 
     public static class Builder

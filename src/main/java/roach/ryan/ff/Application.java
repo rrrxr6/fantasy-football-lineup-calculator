@@ -4,7 +4,6 @@ import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
 import java.io.File;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -30,12 +29,6 @@ public class Application
         parser.optimize();
         FreeAgentPool optimizedPool = new FreeAgentPool(parser.getQuarterbacks(), parser.getRunningBacks(),
                 parser.getWideReceivers(), parser.getTightEnds(), parser.getFlexes(), parser.getDefenses());
-
-        if (optimizedPool.size().compareTo(new BigInteger("850000000000")) > 0)
-        {
-            System.out.println("Player pool is too large. Lineup calculator will take over five minutes to complete.");
-            System.exit(0);
-        }
 
         if (PRINT_PLAYER_INDEXES)
         {
