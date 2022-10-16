@@ -13,22 +13,23 @@ import java.util.concurrent.CompletableFuture;
 import roach.ryan.ff.data.DataParser;
 import roach.ryan.ff.data.FreeAgentPool;
 import roach.ryan.ff.data.Partitioner;
-import roach.ryan.ff.fanduel.FanDuel;
+import roach.ryan.ff.fanduel.FanDuelFullRosterOptimizer;
 import roach.ryan.ff.model.Flex;
 import roach.ryan.ff.model.Team;
 import roach.ryan.ff.model.TopTeams;
 
-public class OptimizeLineup
+public class OptimizeFullRosterLineup
 {
     public static void main(String[] args)
     {
         DataParser parser = new DataParser(new File(args[0]));
         parser.optimize();
         FreeAgentPool optimizedPool = new FreeAgentPool(parser.getQuarterbacks(), parser.getRunningBacks(),
-                parser.getWideReceivers(), parser.getTightEnds(), parser.getFlexes(), parser.getDefenses());
+                parser.getWideReceivers(), parser.getTightEnds(), parser.getFlexes(), parser.getDefenses(),
+                parser.getKickers());
 
         Comparator<Team> comparator = comparing(Team::getMetric);
-        FanDuel fanDuel = new FanDuel.Builder(optimizedPool).build();
+        FanDuelFullRosterOptimizer fanDuel = new FanDuelFullRosterOptimizer.Builder(optimizedPool).build();
         Collection<List<Flex>> flexPartitions = new Partitioner(4).getPartitions(optimizedPool.getFlexes());
         List<CompletableFuture<List<Team>>> futures = flexPartitions.stream()
                 .map(flexes -> CompletableFuture.supplyAsync(() -> fanDuel.getTopTeams(flexes, comparator)))

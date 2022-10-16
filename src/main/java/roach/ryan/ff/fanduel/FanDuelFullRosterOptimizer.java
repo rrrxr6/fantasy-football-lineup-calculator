@@ -18,7 +18,7 @@ import roach.ryan.ff.model.TightEnd;
 import roach.ryan.ff.model.TopTeams;
 import roach.ryan.ff.model.WideReceiver;
 
-public class FanDuel
+public class FanDuelFullRosterOptimizer
 {
     private static final AtomicInteger COUNT = new AtomicInteger(1);
     private final List<Quarterback> qbs;
@@ -31,7 +31,7 @@ public class FanDuel
     private final List<Defense> defs;
     private final int progress;
 
-    private FanDuel(FreeAgentPool pool, List<Quarterback> overrideQb, List<RunningBack> overrideRb1,
+    private FanDuelFullRosterOptimizer(FreeAgentPool pool, List<Quarterback> overrideQb, List<RunningBack> overrideRb1,
             List<RunningBack> overrideRb2, List<WideReceiver> overrideWr1, List<WideReceiver> overrideWr2,
             List<WideReceiver> overrideWr3, List<TightEnd> overrideTe, List<Defense> overrideDef)
     {
@@ -85,12 +85,13 @@ public class FanDuel
                                     {
                                         for (Defense def : defs)
                                         {
-                                            if (sumSalary(qb, rb1, rb2, wr1, wr2, wr3, te, flex, def) > FanDuelTeam
-                                                    .getSalaryCap())
+                                            if (sumSalary(qb, rb1, rb2, wr1, wr2, wr3, te, flex,
+                                                    def) > FanDuelFullRosterTeam.getSalaryCap())
                                             {
                                                 continue;
                                             }
-                                            teams.add(new FanDuelTeam(qb, rb1, rb2, wr1, wr2, wr3, te, flex, def));
+                                            teams.add(new FanDuelFullRosterTeam(qb, rb1, rb2, wr1, wr2, wr3, te, flex,
+                                                    def));
 
                                         }
                                     }
@@ -224,9 +225,9 @@ public class FanDuel
             return withDefense(pool.getDefenses().get(index));
         }
 
-        public FanDuel build()
+        public FanDuelFullRosterOptimizer build()
         {
-            return new FanDuel(pool, qb, rb1, rb2, wr1, wr2, wr3, te, def);
+            return new FanDuelFullRosterOptimizer(pool, qb, rb1, rb2, wr1, wr2, wr3, te, def);
         }
     }
 
