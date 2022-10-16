@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 import roach.ryan.ff.model.Defense;
 import roach.ryan.ff.model.Flex;
+import roach.ryan.ff.model.Kicker;
 import roach.ryan.ff.model.Player;
 import roach.ryan.ff.model.Quarterback;
 import roach.ryan.ff.model.RunningBack;
@@ -25,6 +26,7 @@ public class DataParser
     private final List<TightEnd> tes = new ArrayList<>();
     private final List<Flex> flexes = new ArrayList<>();
     private final List<Defense> defs = new ArrayList<>();
+    private final List<Kicker> ks = new ArrayList<>();
 
     public DataParser(File file)
     {
@@ -57,6 +59,9 @@ public class DataParser
                     case "ST":
                         defs.add(new Defense(name, salary, rank, projectedPoints, actualPoints));
                         break;
+                    case "K":
+                        ks.add(new Kicker(name, salary, rank, projectedPoints, actualPoints));
+                        break;
                     default:
                         throw new RuntimeException("unrecognized position");
                 }
@@ -80,6 +85,7 @@ public class DataParser
         optimize(tes);
         optimizeSkill(flexes);
         optimize(defs);
+        optimize(ks);
     }
 
     public List<Quarterback> getQuarterbacks()
@@ -110,6 +116,11 @@ public class DataParser
     public List<Defense> getDefenses()
     {
         return defs;
+    }
+
+    public List<Kicker> getKickers()
+    {
+        return ks;
     }
 
     private static void optimize(List<? extends Player> players)

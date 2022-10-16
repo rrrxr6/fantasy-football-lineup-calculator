@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import roach.ryan.ff.data.FreeAgentPool;
-import roach.ryan.ff.model.Flex;
 import roach.ryan.ff.model.Player;
 import roach.ryan.ff.model.Team;
 import roach.ryan.ff.model.TopTeams;
@@ -33,7 +32,7 @@ public class FanDuelSingleGameOptimizer
         p5s = Optional.ofNullable(overrideP5).orElse(pool.getPlayers());
     }
 
-    public TopTeams getTopTeams(List<Flex> flexes, Comparator<Team> comparator)
+    public TopTeams getTopTeams(Comparator<Team> comparator)
     {
         TopTeams teams = new TopTeams(50, comparator);
         for (int index1 = 0; index1 < p1s.size(); index1++)

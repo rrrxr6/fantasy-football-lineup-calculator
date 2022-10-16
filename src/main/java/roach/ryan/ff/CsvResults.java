@@ -25,7 +25,8 @@ public class CsvResults
         DataParser parser = new DataParser(new File(args[0]));
         parser.optimize();
         FreeAgentPool optimizedPool = new FreeAgentPool(parser.getQuarterbacks(), parser.getRunningBacks(),
-                parser.getWideReceivers(), parser.getTightEnds(), parser.getFlexes(), parser.getDefenses());
+                parser.getWideReceivers(), parser.getTightEnds(), parser.getFlexes(), parser.getDefenses(),
+                parser.getKickers());
 
         Comparator<Team> comparator = comparing(Team::getMetric);
         FanDuelFullRosterOptimizer fanDuel = new FanDuelFullRosterOptimizer.Builder(optimizedPool).build();
