@@ -4,6 +4,7 @@ import java.util.List;
 
 import roach.ryan.ff.model.Defense;
 import roach.ryan.ff.model.Flex;
+import roach.ryan.ff.model.Player;
 import roach.ryan.ff.model.Quarterback;
 import roach.ryan.ff.model.RunningBack;
 import roach.ryan.ff.model.TightEnd;
@@ -58,5 +59,10 @@ public class FreeAgentPool
     public List<Defense> getDefenses()
     {
         return defs;
+    }
+
+    public List<Player> getPlayers()
+    {
+        return null;
     }
 }

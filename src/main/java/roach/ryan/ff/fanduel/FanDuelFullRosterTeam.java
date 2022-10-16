@@ -11,7 +11,7 @@ import roach.ryan.ff.model.Team;
 import roach.ryan.ff.model.TightEnd;
 import roach.ryan.ff.model.WideReceiver;
 
-public class FanDuelTeam implements Team
+public class FanDuelFullRosterTeam implements Team
 {
     private final Quarterback qb;
     private final RunningBack rb1;
@@ -28,7 +28,7 @@ public class FanDuelTeam implements Team
     private double actualPoints = 0;
     private double metric = 0;
 
-    public FanDuelTeam(Quarterback qb, RunningBack rb1, RunningBack rb2, WideReceiver wr1, WideReceiver wr2,
+    public FanDuelFullRosterTeam(Quarterback qb, RunningBack rb1, RunningBack rb2, WideReceiver wr1, WideReceiver wr2,
             WideReceiver wr3, TightEnd te, Flex flex, Defense def)
     {
         this.qb = qb;
@@ -181,7 +181,7 @@ public class FanDuelTeam implements Team
     @Override
     public boolean equals(Object obj)
     {
-        FanDuelTeam other = (FanDuelTeam) obj;
+        FanDuelFullRosterTeam other = (FanDuelFullRosterTeam) obj;
         return Set.of(qb, rb1, rb2, wr1, wr2, wr3, te, flex, def).equals(Set.of(other.qb, other.rb1, other.rb2,
                 other.wr1, other.wr2, other.wr3, other.te, other.flex, other.def));
 
