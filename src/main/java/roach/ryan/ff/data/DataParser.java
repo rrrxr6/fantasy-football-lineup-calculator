@@ -125,6 +125,10 @@ public class DataParser
 
     private static void optimize(List<? extends Player> players)
     {
+        if (players.isEmpty())
+        {
+            return;
+        }
         players.sort(comparing(Player::getProjectedPoints).reversed());
         double avgPoints = players.stream().mapToDouble(Player::getProjectedPoints).average().getAsDouble();
         Iterator<? extends Player> iterator = players.iterator();
