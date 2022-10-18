@@ -1,5 +1,9 @@
 package roach.ryan.ff.fanduel;
 
+import static java.util.Comparator.comparing;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -43,7 +47,7 @@ public class FanDuelSingleGameTeam implements Team
     {
         if (averageRank == 0)
         {
-            averageRank = (p1.getRank() + p2.getRank() + p3.getRank() + p4.getRank() + p5.getRank()) / 9.0;
+            averageRank = (p1.getRank() + p2.getRank() + p3.getRank() + p4.getRank() + p5.getRank()) / 5.0;
         }
         return averageRank;
     }
@@ -53,8 +57,11 @@ public class FanDuelSingleGameTeam implements Team
     {
         if (projectedPoints == 0)
         {
-            projectedPoints = p1.getProjectedPoints() + p2.getProjectedPoints() + p3.getProjectedPoints()
-                    + p4.getProjectedPoints() + p5.getProjectedPoints();
+            List<Player> players = Arrays.asList(p1, p2, p3, p4, p5);
+            players.sort(comparing(Player::getProjectedPoints).reversed());
+            projectedPoints = players.get(0).getProjectedPoints() * 1.5 + players.get(1).getProjectedPoints()
+                    + players.get(2).getProjectedPoints() + players.get(3).getProjectedPoints()
+                    + players.get(4).getProjectedPoints();
         }
         return projectedPoints;
     }
@@ -64,8 +71,11 @@ public class FanDuelSingleGameTeam implements Team
     {
         if (actualPoints == 0)
         {
-            actualPoints = p1.getActualPoints() + p2.getActualPoints() + p3.getActualPoints() + p4.getActualPoints()
-                    + p5.getActualPoints();
+            List<Player> players = Arrays.asList(p1, p2, p3, p4, p5);
+            players.sort(comparing(Player::getProjectedPoints).reversed());
+            actualPoints = players.get(0).getActualPoints() * 1.5 + players.get(1).getActualPoints()
+                    + players.get(2).getActualPoints() + players.get(3).getActualPoints()
+                    + players.get(4).getActualPoints();
         }
         return actualPoints;
     }

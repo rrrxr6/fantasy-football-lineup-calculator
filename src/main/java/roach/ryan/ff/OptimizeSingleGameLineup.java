@@ -18,7 +18,6 @@ public class OptimizeSingleGameLineup
     public static void main(String[] args)
     {
         DataParser parser = new DataParser(new File(args[0]));
-        parser.optimize();
         FreeAgentPool optimizedPool = new FreeAgentPool(parser.getQuarterbacks(), parser.getRunningBacks(),
                 parser.getWideReceivers(), parser.getTightEnds(), parser.getFlexes(), parser.getDefenses(),
                 parser.getKickers());
