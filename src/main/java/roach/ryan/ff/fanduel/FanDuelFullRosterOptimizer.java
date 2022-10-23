@@ -48,11 +48,11 @@ public class FanDuelFullRosterOptimizer
 
     public TopTeams getTopTeams(List<Flex> flexes, Comparator<Team> comparator)
     {
-        if (size(flexes).compareTo(new BigInteger("50000000000")) > 0)
-        {
-            System.out.println("Player pool is too large. Lineup calculator will take over five minutes to complete.");
-            System.exit(0);
-        }
+//        if (size(flexes).compareTo(new BigInteger("50000000000")) > 0)
+//        {
+//            System.out.println("Player pool is too large. Lineup calculator will take over five minutes to complete.");
+//            System.exit(0);
+//        }
 
         TopTeams teams = new TopTeams(50, comparator);
         for (Flex flex : flexes)

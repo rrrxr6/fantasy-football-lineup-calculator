@@ -56,7 +56,7 @@ public class DataParser
                     case "TE":
                         tes.add(new TightEnd(name, salary, rank, projectedPoints, actualPoints));
                         break;
-                    case "ST":
+                    case "DST":
                         defs.add(new Defense(name, salary, rank, projectedPoints, actualPoints));
                         break;
                     case "K":
@@ -146,6 +146,6 @@ public class DataParser
 
     private static void optimizeSkill(List<? extends Player> players)
     {
-        players.removeIf(p -> p.getRank() > 28);
+        players.removeIf(p -> p.getRank() > 30);
     }
 }
