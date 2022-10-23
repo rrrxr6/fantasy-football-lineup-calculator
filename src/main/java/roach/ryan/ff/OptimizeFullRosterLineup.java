@@ -29,7 +29,7 @@ public class OptimizeFullRosterLineup
                 parser.getKickers());
 
         Comparator<Team> comparator = comparing(Team::getMetric);
-        FanDuelFullRosterOptimizer fanDuel = new FanDuelFullRosterOptimizer.Builder(optimizedPool).build();
+        FanDuelFullRosterOptimizer fanDuel = new FanDuelFullRosterOptimizer.Builder(optimizedPool).withRunningBack1(5).withRunningBack2(12).build();
         Collection<List<Flex>> flexPartitions = new Partitioner(4).getPartitions(optimizedPool.getFlexes());
         List<CompletableFuture<List<Team>>> futures = flexPartitions.stream()
                 .map(flexes -> CompletableFuture.supplyAsync(() -> fanDuel.getTopTeams(flexes, comparator)))
