@@ -13,6 +13,7 @@ import roach.ryan.ff.model.Defense;
 import roach.ryan.ff.model.Flex;
 import roach.ryan.ff.model.Kicker;
 import roach.ryan.ff.model.Player;
+import roach.ryan.ff.model.PlayerBuilder;
 import roach.ryan.ff.model.Quarterback;
 import roach.ryan.ff.model.RunningBack;
 import roach.ryan.ff.model.TightEnd;
@@ -42,25 +43,27 @@ public class DataParser
                 String name = parts[3];
                 double projectedPoints = Double.valueOf(parts[4]);
                 double actualPoints = Double.valueOf(parts[5]);
+                PlayerBuilder builder = new PlayerBuilder(name).withSalary(salary).withRank(rank)
+                        .withProjectPoints(projectedPoints).withActualPoints(actualPoints);
                 switch (position)
                 {
                     case "QB":
-                        qbs.add(new Quarterback(name, salary, rank, projectedPoints, actualPoints));
+                        qbs.add(builder.createQuarterback());
                         break;
                     case "RB":
-                        rbs.add(new RunningBack(name, salary, rank, projectedPoints, actualPoints));
+                        rbs.add(builder.createRunningBack());
                         break;
                     case "WR":
-                        wrs.add(new WideReceiver(name, salary, rank, projectedPoints, actualPoints));
+                        wrs.add(builder.createWideReceiver());
                         break;
                     case "TE":
-                        tes.add(new TightEnd(name, salary, rank, projectedPoints, actualPoints));
+                        tes.add(builder.createTightEnd());
                         break;
                     case "DST":
-                        defs.add(new Defense(name, salary, rank, projectedPoints, actualPoints));
+                        defs.add(builder.createDefense());
                         break;
                     case "K":
-                        ks.add(new Kicker(name, salary, rank, projectedPoints, actualPoints));
+                        ks.add(builder.createKicker());
                         break;
                     default:
                         throw new RuntimeException("unrecognized position");
