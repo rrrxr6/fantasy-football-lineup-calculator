@@ -146,6 +146,6 @@ public class DataParser
 
     private static void optimizeSkill(List<? extends Player> players)
     {
-        players.removeIf(p -> p.getRank() > 40);
+        players.removeIf(p -> p.getRank() > 28);
     }
 }
