@@ -70,18 +70,6 @@ public class Scrape
         }
     }
 
-    private static void padZeros()
-    {
-        for (Entry<Pair, String> entry : PLAYER_DATA.entrySet())
-        {
-            String data = entry.getValue();
-            if (data.split(",").length == 2)
-            {
-                PLAYER_DATA.put(entry.getKey(), String.join(",", data, "0", "0"));
-            }
-        }
-    }
-
     private static void populateData(String week, String position) throws Exception
     {
         String projectedPointBaseURL = "https://api.fantasypros.com/v2/json/nfl/2022/consensus-rankings?type=weekly&scoring=HALF&position=%s&week=%s&experts=available";
