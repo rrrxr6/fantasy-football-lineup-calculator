@@ -5,6 +5,7 @@ import java.util.Objects;
 public class PlayerBuilder
 {
     private final String name;
+    private String positionDisplay;
     private int salary;
     private int rank;
     private double projectedPoints;
@@ -13,6 +14,12 @@ public class PlayerBuilder
     public PlayerBuilder(String name)
     {
         this.name = name;
+    }
+
+    public PlayerBuilder withPositionDisplay(String positionDisplay)
+    {
+        this.positionDisplay = positionDisplay;
+        return this;
     }
 
     public PlayerBuilder withSalary(int salary)
@@ -35,32 +42,32 @@ public class PlayerBuilder
 
     public Quarterback createQuarterback()
     {
-        return new PlayerImpl(name, salary, rank, projectedPoints, actualPoints);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints);
     }
 
     public RunningBack createRunningBack()
     {
-        return new PlayerImpl(name, salary, rank, projectedPoints, actualPoints);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints);
     }
 
     public WideReceiver createWideReceiver()
     {
-        return new PlayerImpl(name, salary, rank, projectedPoints, actualPoints);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints);
     }
 
     public TightEnd createTightEnd()
     {
-        return new PlayerImpl(name, salary, rank, projectedPoints, actualPoints);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints);
     }
 
     public Kicker createKicker()
     {
-        return new PlayerImpl(name, salary, rank, projectedPoints, actualPoints);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints);
     }
 
     public Defense createDefense()
     {
-        return new PlayerImpl(name, salary, rank, projectedPoints, actualPoints);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints);
     }
 
     public PlayerBuilder withActualPoints(double actualPoints)
@@ -72,14 +79,17 @@ public class PlayerBuilder
     private static class PlayerImpl implements Quarterback, RunningBack, WideReceiver, TightEnd, Kicker, Defense
     {
         private final String name_;
+        private final String positionDisplay_;
         private final int salary_;
         private final int rank_;
         private final double projectedPoints_;
         private final double actualPoints_;
 
-        public PlayerImpl(String name, int salary, int rank, double projectedPoints, double actualPoints)
+        public PlayerImpl(String name, String positionDisplay, int salary, int rank, double projectedPoints,
+                double actualPoints)
         {
             this.name_ = name;
+            this.positionDisplay_ = positionDisplay;
             this.salary_ = salary;
             this.rank_ = rank;
             this.projectedPoints_ = projectedPoints;
@@ -90,6 +100,12 @@ public class PlayerBuilder
         public String getName()
         {
             return name_;
+        }
+
+        @Override
+        public String getPositionDisplay()
+        {
+            return positionDisplay_;
         }
 
         @Override
@@ -119,8 +135,8 @@ public class PlayerBuilder
         @Override
         public String toString()
         {
-            return String.format("[%25s, %13s, $%,6d, %4.1f, %3d]", name_, getClass().getSimpleName(), salary_,
-                    projectedPoints_, rank_);
+            return String.format("[%25s, %4s, $%,6d, %4.1f, %3d]", name_, positionDisplay_, salary_, projectedPoints_,
+                    rank_);
         }
 
         @Override

@@ -48,22 +48,22 @@ public class DataParser
                 switch (position)
                 {
                     case "QB":
-                        qbs.add(builder.createQuarterback());
+                        qbs.add(builder.withPositionDisplay("QB").createQuarterback());
                         break;
                     case "RB":
-                        rbs.add(builder.createRunningBack());
+                        rbs.add(builder.withPositionDisplay("RB").createRunningBack());
                         break;
                     case "WR":
-                        wrs.add(builder.createWideReceiver());
+                        wrs.add(builder.withPositionDisplay("WR").createWideReceiver());
                         break;
                     case "TE":
-                        tes.add(builder.createTightEnd());
+                        tes.add(builder.withPositionDisplay("TE").createTightEnd());
                         break;
                     case "DST":
-                        defs.add(builder.createDefense());
+                        defs.add(builder.withPositionDisplay("DST").createDefense());
                         break;
                     case "K":
-                        ks.add(builder.createKicker());
+                        ks.add(builder.withPositionDisplay("K").createKicker());
                         break;
                     default:
                         throw new RuntimeException("unrecognized position");
