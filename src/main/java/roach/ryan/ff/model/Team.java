@@ -12,5 +12,7 @@ public interface Team
 
     double getMetric();
 
+    double getOwnership();
+
     String toStringCsv();
 }
