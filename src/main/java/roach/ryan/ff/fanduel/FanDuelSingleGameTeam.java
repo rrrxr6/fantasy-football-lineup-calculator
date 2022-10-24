@@ -22,6 +22,7 @@ public class FanDuelSingleGameTeam implements Team
     private double projectedPoints = 0;
     private double actualPoints = 0;
     private double metric = 0;
+    private double ownership = 0;
 
     public FanDuelSingleGameTeam(Player p1, Player p2, Player p3, Player p4, Player p5)
     {
@@ -91,6 +92,17 @@ public class FanDuelSingleGameTeam implements Team
     }
 
     @Override
+    public double getOwnership()
+    {
+        if (ownership == 0)
+        {
+            ownership = p1.getOwnership() + p2.getOwnership() + p3.getOwnership() + p4.getOwnership()
+                    + p5.getOwnership();
+        }
+        return ownership;
+    }
+
+    @Override
     public String toStringCsv()
     {
         StringBuilder sb = new StringBuilder();
@@ -127,6 +139,8 @@ public class FanDuelSingleGameTeam implements Team
         sb.append(getSalary());
         sb.append(" - Avg Rank: ");
         sb.append(String.format("%.2f", getAverageRank()));
+        sb.append(" - Ownership: ");
+        sb.append(String.format("%.1f%%", getOwnership()));
         sb.append("\n");
 
         sb.append(p1);

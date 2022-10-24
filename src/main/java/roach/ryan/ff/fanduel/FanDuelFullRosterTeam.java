@@ -27,6 +27,7 @@ public class FanDuelFullRosterTeam implements Team
     private double projectedPoints = 0;
     private double actualPoints = 0;
     private double metric = 0;
+    private double ownership = 0;
 
     public FanDuelFullRosterTeam(Quarterback qb, RunningBack rb1, RunningBack rb2, WideReceiver wr1, WideReceiver wr2,
             WideReceiver wr3, TightEnd te, Flex flex, Defense def)
@@ -99,6 +100,18 @@ public class FanDuelFullRosterTeam implements Team
     }
 
     @Override
+    public double getOwnership()
+    {
+        if (ownership == 0)
+        {
+            ownership = qb.getOwnership() + rb1.getOwnership() + rb2.getOwnership() + wr1.getOwnership()
+                    + wr2.getOwnership() + wr3.getOwnership() + te.getOwnership() + flex.getOwnership()
+                    + def.getOwnership();
+        }
+        return ownership;
+    }
+
+    @Override
     public String toStringCsv()
     {
         StringBuilder sb = new StringBuilder();
@@ -143,6 +156,8 @@ public class FanDuelFullRosterTeam implements Team
         sb.append(getSalary());
         sb.append(" - Avg Rank: ");
         sb.append(String.format("%.2f", getAverageRank()));
+        sb.append(" - Ownership: ");
+        sb.append(String.format("%.1f%%", getOwnership()));
         sb.append("\n");
 
         sb.append(qb);

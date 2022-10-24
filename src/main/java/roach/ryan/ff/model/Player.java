@@ -13,4 +13,6 @@ public interface Player
     double getProjectedPoints();
 
     double getActualPoints();
+
+    double getOwnership();
 }
