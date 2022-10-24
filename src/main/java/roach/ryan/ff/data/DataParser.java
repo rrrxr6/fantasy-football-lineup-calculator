@@ -43,27 +43,27 @@ public class DataParser
                 String name = parts[3];
                 double projectedPoints = Double.valueOf(parts[4]);
                 double actualPoints = Double.valueOf(parts[5]);
-                PlayerBuilder builder = new PlayerBuilder(name).withSalary(salary).withRank(rank)
+                PlayerBuilder builder = new PlayerBuilder(name).withPositionDisplay(position).withSalary(salary).withRank(rank)
                         .withProjectPoints(projectedPoints).withActualPoints(actualPoints);
                 switch (position)
                 {
                     case "QB":
-                        qbs.add(builder.withPositionDisplay("QB").createQuarterback());
+                        qbs.add(builder.createQuarterback());
                         break;
                     case "RB":
-                        rbs.add(builder.withPositionDisplay("RB").createRunningBack());
+                        rbs.add(builder.createRunningBack());
                         break;
                     case "WR":
-                        wrs.add(builder.withPositionDisplay("WR").createWideReceiver());
+                        wrs.add(builder.createWideReceiver());
                         break;
                     case "TE":
-                        tes.add(builder.withPositionDisplay("TE").createTightEnd());
+                        tes.add(builder.createTightEnd());
                         break;
                     case "DST":
-                        defs.add(builder.withPositionDisplay("DST").createDefense());
+                        defs.add(builder.createDefense());
                         break;
                     case "K":
-                        ks.add(builder.withPositionDisplay("K").createKicker());
+                        ks.add(builder.createKicker());
                         break;
                     default:
                         throw new RuntimeException("unrecognized position");
