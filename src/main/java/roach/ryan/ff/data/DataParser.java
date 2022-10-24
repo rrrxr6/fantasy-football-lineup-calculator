@@ -35,7 +35,7 @@ public class DataParser
         {
             while (scanner.hasNext())
             {
-                // line format should be "1,QB,8700,Patrick Mahomes II,25.2,37.7"
+                // line format should be "1,QB,8700,Patrick Mahomes II,25.2,37.7,7.8"
                 String[] parts = scanner.nextLine().split(",");
                 int rank = Integer.valueOf(parts[0].replaceAll("[^0-9]+", ""));
                 String position = parts[1].replaceAll("[^A-Za-z]+", "");
@@ -43,8 +43,12 @@ public class DataParser
                 String name = parts[3];
                 double projectedPoints = Double.valueOf(parts[4]);
                 double actualPoints = Double.valueOf(parts[5]);
-                PlayerBuilder builder = new PlayerBuilder(name).withPositionDisplay(position).withSalary(salary).withRank(rank)
-                        .withProjectPoints(projectedPoints).withActualPoints(actualPoints);
+                PlayerBuilder builder = new PlayerBuilder(name).withPositionDisplay(position).withSalary(salary)
+                        .withRank(rank).withProjectPoints(projectedPoints).withActualPoints(actualPoints);
+                if (parts.length == 7)
+                {
+                    builder.withOwnership(Double.valueOf(parts[6]));
+                }
                 switch (position)
                 {
                     case "QB":
