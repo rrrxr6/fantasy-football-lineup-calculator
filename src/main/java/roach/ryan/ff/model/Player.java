@@ -15,4 +15,6 @@ public interface Player
     double getActualPoints();
 
     double getOwnership();
+
+    String getGameTime();
 }

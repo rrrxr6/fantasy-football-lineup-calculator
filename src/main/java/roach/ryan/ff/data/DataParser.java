@@ -35,7 +35,7 @@ public class DataParser
         {
             while (scanner.hasNext())
             {
-                // line format should be "1,QB,8700,Patrick Mahomes II,25.2,37.7,7.8"
+                // line format should be "1,QB,8700,Patrick Mahomes II,25.2,37.7,7.8,Sun 8:20PM"
                 String[] parts = scanner.nextLine().split(",");
                 int rank = Integer.valueOf(parts[0].replaceAll("[^0-9]+", ""));
                 String position = parts[1].replaceAll("[^A-Za-z]+", "");
@@ -48,6 +48,10 @@ public class DataParser
                 if (parts.length == 7)
                 {
                     builder.withOwnership(Double.valueOf(parts[6]));
+                }
+                if (parts.length == 8)
+                {
+                    builder.withGameTime(parts[7]);
                 }
                 switch (position)
                 {
