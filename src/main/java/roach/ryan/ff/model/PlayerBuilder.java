@@ -11,6 +11,7 @@ public class PlayerBuilder
     private double projectedPoints;
     private double actualPoints;
     private double ownership;
+    private String gameTime;
 
     public PlayerBuilder(String name)
     {
@@ -53,34 +54,40 @@ public class PlayerBuilder
         return this;
     }
 
+    public PlayerBuilder withGameTime(String gameTime)
+    {
+        this.gameTime = gameTime;
+        return this;
+    }
+
     public Quarterback createQuarterback()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
     }
 
     public RunningBack createRunningBack()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
     }
 
     public WideReceiver createWideReceiver()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
     }
 
     public TightEnd createTightEnd()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
     }
 
     public Kicker createKicker()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
     }
 
     public Defense createDefense()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
     }
 
     private static class PlayerImpl implements Quarterback, RunningBack, WideReceiver, TightEnd, Kicker, Defense
@@ -92,9 +99,10 @@ public class PlayerBuilder
         private final double projectedPoints_;
         private final double actualPoints_;
         private final double ownership_;
+        private final String gameTime_;
 
         public PlayerImpl(String name, String positionDisplay, int salary, int rank, double projectedPoints,
-                double actualPoints, double ownership)
+                double actualPoints, double ownership, String gameTime)
         {
             this.name_ = name;
             this.positionDisplay_ = positionDisplay;
@@ -103,6 +111,7 @@ public class PlayerBuilder
             this.projectedPoints_ = projectedPoints;
             this.actualPoints_ = actualPoints;
             this.ownership_ = ownership;
+            this.gameTime_ = gameTime;
         }
 
         @Override
@@ -148,10 +157,16 @@ public class PlayerBuilder
         }
 
         @Override
+        public String getGameTime()
+        {
+            return gameTime_;
+        }
+
+        @Override
         public String toString()
         {
-            return String.format("[%25s, %4s, $%,6d, %4.1f, %3d, %4.1f%%]", name_, positionDisplay_, salary_,
-                    projectedPoints_, rank_, ownership_);
+            return String.format("[%25s, %4s, $%,6d, %4.1f, %3d, %4.1f%%, %12s]", name_, positionDisplay_, salary_,
+                    projectedPoints_, rank_, ownership_, gameTime_);
         }
 
         @Override
@@ -175,5 +190,4 @@ public class PlayerBuilder
                     && salary_ == other.salary_;
         }
     }
-
 }
