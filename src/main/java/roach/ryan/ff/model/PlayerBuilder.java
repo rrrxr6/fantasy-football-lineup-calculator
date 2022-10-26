@@ -90,6 +90,11 @@ public class PlayerBuilder
         return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
     }
 
+    public Player createPlayer()
+    {
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
+    }
+
     private static class PlayerImpl implements Quarterback, RunningBack, WideReceiver, TightEnd, Kicker, Defense
     {
         private final String name_;
@@ -160,6 +165,14 @@ public class PlayerBuilder
         public String getGameTime()
         {
             return gameTime_;
+        }
+
+        @Override
+        public String toCsv()
+        {
+            // line format should be "1,QB,8700,Patrick Mahomes II,25.2,37.7,7.8,Sun 8:20PM"
+            return String.format("%d,%s,%d,%s,%.1f,%.2f,%.1f,%s", rank_, positionDisplay_, salary_, name_,
+                    projectedPoints_, actualPoints_, ownership_, gameTime_);
         }
 
         @Override
