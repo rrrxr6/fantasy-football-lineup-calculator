@@ -17,4 +17,6 @@ public interface Player
     double getOwnership();
 
     String getGameTime();
+
+    String toCsv();
 }

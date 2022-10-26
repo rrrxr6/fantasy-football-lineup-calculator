@@ -1,0 +1,46 @@
+package roach.ryan.ff.data.scrape;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+import roach.ryan.ff.model.PlayerBuilder;
+
+public class PlayerCsvReader
+{
+
+    public Map<PlayerKey, PlayerBuilder> read(String fileName)
+    {
+        Map<PlayerKey, PlayerBuilder> playerData = new HashMap<>();
+        try
+        {
+            Scanner scanner = new Scanner(new File(fileName));
+            while (scanner.hasNext())
+            {
+                String line = scanner.nextLine();
+                String[] parts = line.split(",");
+                int rank = Integer.valueOf(parts[0]);
+                String position = parts[1];
+                int salary = Integer.valueOf(parts[2]);
+                String name = parts[3];
+                double projectedPoints = Double.valueOf(parts[4]);
+                double actualPoints = Double.valueOf(parts[5]);
+                double ownership = Double.valueOf(parts[6]);
+                String gameTime = parts[7];
+                playerData.put(new PlayerKey(name, position),
+                        new PlayerBuilder(name).withRank(rank).withPositionDisplay(position).withSalary(salary)
+                                .withProjectPoints(projectedPoints).withActualPoints(actualPoints)
+                                .withOwnership(ownership).withGameTime(gameTime));
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            System.out.println("Error encountered while reading the file.");
+            e.printStackTrace();
+        }
+        return playerData;
+    }
+
+}
