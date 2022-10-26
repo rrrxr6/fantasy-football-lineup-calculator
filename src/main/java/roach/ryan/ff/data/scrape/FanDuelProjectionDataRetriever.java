@@ -88,7 +88,7 @@ public class FanDuelProjectionDataRetriever
                 int rank = player.getInt("rank_ecr");
                 double projectedPoints = player.optDouble("r2p_pts", 0);
                 playerData.computeIfPresent(new PlayerKey(name, position),
-                        (pair, builder) -> builder.withRank(rank).withProjectPoints(projectedPoints));
+                        (key, builder) -> builder.withRank(rank).withProjectPoints(projectedPoints));
             }
         }
         catch (IOException | InterruptedException | URISyntaxException e)

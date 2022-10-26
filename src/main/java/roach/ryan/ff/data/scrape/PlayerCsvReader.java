@@ -21,7 +21,7 @@ public class PlayerCsvReader
             {
                 String line = scanner.nextLine();
                 String[] parts = line.split(",");
-                int rank = Integer.valueOf(parts[0]);
+                int rank = Integer.valueOf(parts[0].replaceAll("[^0-9]+", ""));
                 String position = parts[1];
                 int salary = Integer.valueOf(parts[2]);
                 String name = parts[3];
