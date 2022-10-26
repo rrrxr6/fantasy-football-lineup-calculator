@@ -38,6 +38,10 @@ public class DataParser
                 // line format should be "1,QB,8700,Patrick Mahomes II,25.2,37.7,7.8,Sun 8:20PM"
                 String[] parts = scanner.nextLine().split(",");
                 int rank = Integer.valueOf(parts[0].replaceAll("[^0-9]+", ""));
+                if (rank == 0)
+                {
+                    continue;
+                }
                 String position = parts[1].replaceAll("[^A-Za-z]+", "");
                 int salary = Integer.valueOf(parts[2]);
                 String name = parts[3];
@@ -151,6 +155,7 @@ public class DataParser
             if (current.getSalary() > last.getSalary() || current.getProjectedPoints() < avgPoints)
             {
                 iterator.remove();
+                current = last;
             }
         }
     }
