@@ -55,6 +55,7 @@ public class DataParser
                 }
                 if (parts.length == 8)
                 {
+                    builder.withOwnership(Double.valueOf(parts[6]));
                     builder.withGameTime(parts[7]);
                 }
                 switch (position)
