@@ -90,6 +90,11 @@ public class FanDuelFullRosterOptimizer
                                             {
                                                 continue;
                                             }
+//                                            if (sumOwnership(qb, rb1, rb2, wr1, wr2, wr3, te, flex,
+//                                                    def) >= 70)
+//                                            {
+//                                                continue;
+//                                            }
                                             teams.add(new FanDuelFullRosterTeam(qb, rb1, rb2, wr1, wr2, wr3, te, flex,
                                                     def));
 
@@ -239,5 +244,15 @@ public class FanDuelFullRosterOptimizer
             salary += player.getSalary();
         }
         return salary;
+    }
+
+    private static double sumOwnership(Player... players)
+    {
+        double ownership = 0;
+        for (Player player : players)
+        {
+            ownership += player.getOwnership();
+        }
+        return ownership;
     }
 }

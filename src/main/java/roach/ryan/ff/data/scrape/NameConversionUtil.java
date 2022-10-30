@@ -15,6 +15,8 @@ public class NameConversionUtil
         NAMES.put("Brian Robinson", "Brian Robinson Jr.");
         NAMES.put("Phillip Dorsett", "Phillip Dorsett II");
         NAMES.put("Richie James", "Richie James Jr.");
+        NAMES.put("D.J. Moore", "DJ Moore");
+        NAMES.put("P.J. Walker", "PJ Walker");
     }
 
     private NameConversionUtil()
