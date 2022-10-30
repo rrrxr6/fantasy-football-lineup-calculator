@@ -30,7 +30,7 @@ public class FanDuelOwnershipRetriever
                 String name = cols.get(1).text();
                 String position = cols.get(4).text();
                 position = position.equals("D") ? "DST" : position;
-                double ownership = Double.valueOf(cols.get(6).text().replace("%",""));
+                double ownership = Double.valueOf(cols.get(6).text().replace("%", ""));
                 PlayerKey playerKey = new PlayerKey(convert(name), position);
                 playerData.computeIfPresent(playerKey, (key, builder) -> builder.withOwnership(ownership));
             }

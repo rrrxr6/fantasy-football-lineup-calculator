@@ -90,11 +90,11 @@ public class FanDuelFullRosterOptimizer
                                             {
                                                 continue;
                                             }
-//                                            if (sumOwnership(qb, rb1, rb2, wr1, wr2, wr3, te, flex,
-//                                                    def) >= 70)
-//                                            {
-//                                                continue;
-//                                            }
+                                            // if (sumOwnership(qb, rb1, rb2, wr1, wr2, wr3, te, flex,
+                                            // def) >= 70)
+                                            // {
+                                            // continue;
+                                            // }
                                             teams.add(new FanDuelFullRosterTeam(qb, rb1, rb2, wr1, wr2, wr3, te, flex,
                                                     def));
 

@@ -30,11 +30,12 @@ public class Scrape
             new PlayerCsvWriter().write(fileName, dataWithOwnership.values());
         }
 
-//        Map<PlayerKey, PlayerBuilder> dataFromFile = new PlayerCsvReader().read(fileName);
-//        Map<PlayerKey, PlayerBuilder> dataWithActualPoints = new FanDuelActualPointsRetriever().retrieve(dataFromFile,
-//                week);
+        // Map<PlayerKey, PlayerBuilder> dataFromFile = new PlayerCsvReader().read(fileName);
+        // Map<PlayerKey, PlayerBuilder> dataWithActualPoints = new
+        // FanDuelActualPointsRetriever().retrieve(dataFromFile,
+        // week);
 
-//        new PlayerCsvWriter().write(fileName, dataWithActualPoints.values());
+        // new PlayerCsvWriter().write(fileName, dataWithActualPoints.values());
         // for (PlayerBuilder builder : dataWithActualPoints.values())
         // {
         // System.out.println(builder.createPlayer().toCsv());
