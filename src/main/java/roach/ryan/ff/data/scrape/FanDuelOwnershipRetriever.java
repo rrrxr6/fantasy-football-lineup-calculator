@@ -1,5 +1,7 @@
 package roach.ryan.ff.data.scrape;
 
+import static roach.ryan.ff.data.scrape.NameConversionUtil.convert;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -27,8 +29,9 @@ public class FanDuelOwnershipRetriever
                 Elements cols = row.select("td");
                 String name = cols.get(1).text();
                 String position = cols.get(4).text();
+                position = position.equals("D") ? "DST" : position;
                 double ownership = Double.valueOf(cols.get(6).text().replace("%",""));
-                PlayerKey playerKey = new PlayerKey(name, position);
+                PlayerKey playerKey = new PlayerKey(convert(name), position);
                 playerData.computeIfPresent(playerKey, (key, builder) -> builder.withOwnership(ownership));
             }
 
