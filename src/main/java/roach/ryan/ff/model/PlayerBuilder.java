@@ -12,6 +12,10 @@ public class PlayerBuilder
     private double actualPoints;
     private double ownership;
     private String gameTime;
+    private int rankMin;
+    private int rankMax;
+    private String team;
+    private String opponent;
 
     public PlayerBuilder(String name)
     {
@@ -60,39 +64,70 @@ public class PlayerBuilder
         return this;
     }
 
+    public PlayerBuilder withRankMin(int rankMin)
+    {
+        this.rankMin = rankMin;
+        return this;
+    }
+
+    public PlayerBuilder withRankMax(int rankMax)
+    {
+        this.rankMax = rankMax;
+        return this;
+    }
+
+    public PlayerBuilder withTeam(String team)
+    {
+        this.team = team;
+        return this;
+    }
+
+    public PlayerBuilder withOpponent(String opponent)
+    {
+        this.opponent = opponent;
+        return this;
+    }
+
     public Quarterback createQuarterback()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
+        return newPlayer();
     }
 
     public RunningBack createRunningBack()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
+        return newPlayer();
     }
 
     public WideReceiver createWideReceiver()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
+        return newPlayer();
     }
 
     public TightEnd createTightEnd()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
+        return newPlayer();
     }
 
     public Kicker createKicker()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
+        return newPlayer();
     }
 
     public Defense createDefense()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
+        return newPlayer();
     }
 
     public Player createPlayer()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
+        return newPlayer();
+    }
+
+    private PlayerImpl newPlayer()
+    {
+
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime,
+                rankMin, rankMax, team, opponent);
     }
 
     private static class PlayerImpl implements Quarterback, RunningBack, WideReceiver, TightEnd, Kicker, Defense
@@ -105,9 +140,14 @@ public class PlayerBuilder
         private final double actualPoints_;
         private final double ownership_;
         private final String gameTime_;
+        private final int rankMin_;
+        private final int rankMax_;
+        private final String team_;
+        private final String opponent_;
 
         public PlayerImpl(String name, String positionDisplay, int salary, int rank, double projectedPoints,
-                double actualPoints, double ownership, String gameTime)
+                double actualPoints, double ownership, String gameTime, int rankMin, int rankMax, String team,
+                String opponent)
         {
             this.name_ = name;
             this.positionDisplay_ = positionDisplay;
@@ -117,6 +157,10 @@ public class PlayerBuilder
             this.actualPoints_ = actualPoints;
             this.ownership_ = ownership;
             this.gameTime_ = gameTime;
+            this.rankMin_ = rankMin;
+            this.rankMax_ = rankMax;
+            this.team_ = team;
+            this.opponent_ = opponent;
         }
 
         @Override
@@ -168,11 +212,35 @@ public class PlayerBuilder
         }
 
         @Override
+        public int getRankMin()
+        {
+            return rankMin_;
+        }
+
+        @Override
+        public int getRankMax()
+        {
+            return rankMax_;
+        }
+
+        @Override
+        public String getTeam()
+        {
+            return team_;
+        }
+
+        @Override
+        public String getOpponent()
+        {
+            return opponent_;
+        }
+
+        @Override
         public String toCsv()
         {
             // line format should be "1,QB,8700,Patrick Mahomes II,25.2,37.7,7.8,Sun 8:20PM"
-            return String.format("%d,%s,%d,%s,%.1f,%.2f,%.1f,%s", rank_, positionDisplay_, salary_, name_,
-                    projectedPoints_, actualPoints_, ownership_, gameTime_);
+            return String.format("%d,%s,%d,%s,%.1f,%.2f,%.1f,%s,%d,%d,%s,%s", rank_, positionDisplay_, salary_, name_,
+                    projectedPoints_, actualPoints_, ownership_, gameTime_, rankMin_, rankMax_, team_, opponent_);
         }
 
         @Override

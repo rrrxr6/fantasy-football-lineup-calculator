@@ -73,6 +73,17 @@ public class FanDuelProjectionDataRetriever
         return playerData;
     }
 
+    public Map<PlayerKey, PlayerBuilder> retrieve(Map<PlayerKey, PlayerBuilder> playerData, int week)
+    {
+        populateData(playerData, week, "QB");
+        populateData(playerData, week, "RB");
+        populateData(playerData, week, "WR");
+        populateData(playerData, week, "TE");
+        populateData(playerData, week, "DST");
+        populateData(playerData, week, "K");
+        return playerData;
+    }
+
     private void populateData(Map<PlayerKey, PlayerBuilder> playerData, int week, String position)
     {
         try
@@ -87,8 +98,14 @@ public class FanDuelProjectionDataRetriever
                 String name = player.getString("player_name");
                 int rank = player.getInt("rank_ecr");
                 double projectedPoints = player.optDouble("r2p_pts", 0);
+                int rankMin = player.getInt("rank_min");
+                int rankMax = player.getInt("rank_max");
+                String team = player.getString("player_team_id");
+                String rawOpponent = player.getString("player_opponent");
+                String opponent = rawOpponent.isBlank() ? null : rawOpponent;
                 playerData.computeIfPresent(new PlayerKey(name, position),
-                        (key, builder) -> builder.withRank(rank).withProjectPoints(projectedPoints));
+                        (key, builder) -> builder.withRank(rank).withProjectPoints(projectedPoints).withRankMin(rankMin)
+                                .withRankMax(rankMax).withTeam(team).withOpponent(opponent));
             }
         }
         catch (IOException | InterruptedException | URISyntaxException e)

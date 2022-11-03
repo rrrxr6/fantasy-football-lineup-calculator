@@ -49,14 +49,18 @@ public class DataParser
                 double actualPoints = Double.valueOf(parts[5]);
                 PlayerBuilder builder = new PlayerBuilder(name).withPositionDisplay(position).withSalary(salary)
                         .withRank(rank).withProjectPoints(projectedPoints).withActualPoints(actualPoints);
-                if (parts.length == 7)
+                switch (parts.length)
                 {
-                    builder.withOwnership(Double.valueOf(parts[6]));
-                }
-                if (parts.length == 8)
-                {
-                    builder.withOwnership(Double.valueOf(parts[6]));
-                    builder.withGameTime(parts[7]);
+                    case 12:
+                        builder.withRankMin(Integer.valueOf(parts[8]));
+                        builder.withRankMax(Integer.valueOf(parts[9]));
+                        builder.withTeam(parts[10]);
+                        builder.withOpponent(parts[11]);
+                    case 8:
+                        builder.withGameTime(parts[7]);
+                    case 7:
+                        builder.withOwnership(Double.valueOf(parts[6]));
+                        break;
                 }
                 switch (position)
                 {

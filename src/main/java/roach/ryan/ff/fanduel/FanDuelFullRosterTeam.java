@@ -59,8 +59,8 @@ public class FanDuelFullRosterTeam implements Team
     {
         if (averageRank == 0)
         {
-            averageRank = (qb.getRank() + rb1.getRank() + rb2.getRank() + wr1.getRank() + wr2.getRank() + wr3.getRank()
-                    + te.getRank() + flex.getRank() + def.getRank()) / 9.0;
+            averageRank = (qb.getRankMax() + rb1.getRankMax() + rb2.getRankMax() + wr1.getRankMax() + wr2.getRankMax()
+                    + wr3.getRankMax() + te.getRankMax() + flex.getRankMax() + def.getRankMax()) / 9.0;
         }
         return averageRank;
     }
@@ -70,9 +70,15 @@ public class FanDuelFullRosterTeam implements Team
     {
         if (projectedPoints == 0)
         {
-            projectedPoints = qb.getProjectedPoints() + rb1.getProjectedPoints() + rb2.getProjectedPoints()
-                    + wr1.getProjectedPoints() + wr2.getProjectedPoints() + wr3.getProjectedPoints()
-                    + te.getProjectedPoints() + flex.getProjectedPoints() + def.getProjectedPoints();
+            projectedPoints = qb.getProjectedPoints() * (qb.getRank() * 1.0 / qb.getRankMax())
+                    + rb1.getProjectedPoints() * (rb1.getRank() * 1.0 / rb1.getRankMax())
+                    + rb2.getProjectedPoints() * (rb2.getRank() * 1.0 / rb2.getRankMax())
+                    + wr1.getProjectedPoints() * (wr1.getRank() * 1.0 / wr1.getRankMax())
+                    + wr2.getProjectedPoints() * (wr2.getRank() * 1.0 / wr2.getRankMax())
+                    + wr3.getProjectedPoints() * (wr3.getRank() * 1.0 / wr3.getRankMax())
+                    + te.getProjectedPoints() * (te.getRank() * 1.0 / te.getRankMax())
+                    + flex.getProjectedPoints() * (flex.getRank() * 1.0 / flex.getRankMax())
+                    + def.getProjectedPoints() * (def.getRank() * 1.0 / def.getRankMax());
         }
         return projectedPoints;
     }

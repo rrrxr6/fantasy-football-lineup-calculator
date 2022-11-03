@@ -18,5 +18,13 @@ public interface Player
 
     String getGameTime();
 
+    int getRankMin();
+
+    int getRankMax();
+
+    String getTeam();
+
+    String getOpponent();
+
     String toCsv();
 }
