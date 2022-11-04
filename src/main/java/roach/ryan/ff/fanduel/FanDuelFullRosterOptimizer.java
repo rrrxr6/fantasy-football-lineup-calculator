@@ -54,7 +54,7 @@ public class FanDuelFullRosterOptimizer
             System.exit(0);
         }
 
-        TopTeams teams = new TopTeams(50, comparator);
+        TopTeams teams = new TopTeams(100, comparator);
         for (Flex flex : flexes)
         {
             System.out.print("(" + COUNT.getAndIncrement() + "/" + progress + ")\r");

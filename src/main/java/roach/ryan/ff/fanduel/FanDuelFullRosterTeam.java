@@ -1,10 +1,12 @@
 package roach.ryan.ff.fanduel;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
 import roach.ryan.ff.model.Defense;
 import roach.ryan.ff.model.Flex;
+import roach.ryan.ff.model.Player;
 import roach.ryan.ff.model.Quarterback;
 import roach.ryan.ff.model.RunningBack;
 import roach.ryan.ff.model.Team;
@@ -205,5 +207,11 @@ public class FanDuelFullRosterTeam implements Team
     public static int getSalaryCap()
     {
         return 60000;
+    }
+
+    @Override
+    public Collection<Player> getPlayers()
+    {
+        return Set.of(qb, rb1, rb2, wr1, wr2, wr3, te, flex, def);
     }
 }

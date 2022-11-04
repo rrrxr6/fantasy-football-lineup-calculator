@@ -1,11 +1,9 @@
 package roach.ryan.ff.data;
 
-import static java.util.Comparator.comparing;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -95,13 +93,17 @@ public class DataParser
 
     public void optimize()
     {
-        optimize(qbs);
-        optimizeSkill(rbs);
-        optimizeSkill(wrs);
-        optimize(tes);
-        optimizeSkill(flexes);
-        optimize(defs);
-        optimize(ks);
+        optimize(qbs, 10);
+        optimize(rbs, 20);
+        optimize(wrs, 40);
+        optimize(tes, 10);
+
+        flexes.clear();
+        flexes.addAll(rbs);
+        flexes.addAll(wrs);
+
+        optimize(defs, 10);
+        optimize(ks, 10);
     }
 
     public List<Quarterback> getQuarterbacks()
@@ -139,30 +141,23 @@ public class DataParser
         return ks;
     }
 
-    private static void optimize(List<? extends Player> players)
+    private static void optimize(List<? extends Player> players, int toKeep)
     {
         if (players.isEmpty())
         {
             return;
         }
-        players.sort(comparing(Player::getProjectedPoints).reversed());
-        double avgPoints = players.stream().mapToDouble(Player::getProjectedPoints).average().getAsDouble();
-        Iterator<? extends Player> iterator = players.iterator();
-        Player current = iterator.next();
-        while (iterator.hasNext())
+        players.sort(new Comparator<Player>()
         {
-            Player last = current;
-            current = iterator.next();
-            if (current.getSalary() > last.getSalary() || current.getProjectedPoints() < avgPoints)
-            {
-                iterator.remove();
-                current = last;
-            }
-        }
-    }
 
-    private static void optimizeSkill(List<? extends Player> players)
-    {
-        players.removeIf(p -> p.getRank() > 30);
+            @Override
+            public int compare(Player o1, Player o2)
+            {
+                Double d1 = o1.getProjectedPoints() / o1.getSalary();
+                Double d2 = o2.getProjectedPoints() / o2.getSalary();
+                return d1.compareTo(d2);
+            }
+        }.reversed());
+        players.subList(toKeep, players.size()).clear();
     }
 }

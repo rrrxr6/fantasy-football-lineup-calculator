@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import roach.ryan.ff.analysis.PlayerDistribution;
 import roach.ryan.ff.data.DataParser;
 import roach.ryan.ff.data.FreeAgentPool;
 import roach.ryan.ff.data.Partitioner;
@@ -44,8 +45,11 @@ public class OptimizeFullRosterLineup
         {
             System.out.println("No valid teams can be made from the pool.");
         }
-
+        teams.subList(0, teams.size() - 100).clear();
+        teams.sort(comparing(Team::getActualPoints));
         printTeams(teams);
+        System.out.println();
+        new PlayerDistribution(teams).print();
     }
 
     private static void printTeams(List<Team> teams)
