@@ -1,5 +1,7 @@
 package roach.ryan.ff.model;
 
+import java.util.Collection;
+
 public interface Team
 {
     int getSalary();
@@ -17,4 +19,6 @@ public interface Team
     String toStringCsv();
 
     String toLineupIdsCsv();
+
+    Collection<Player> getPlayers();
 }
