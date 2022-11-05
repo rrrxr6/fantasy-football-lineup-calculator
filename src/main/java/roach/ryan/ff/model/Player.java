@@ -18,5 +18,7 @@ public interface Player
 
     String getGameTime();
 
+    String getId();
+
     String toCsv();
 }
