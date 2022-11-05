@@ -12,6 +12,7 @@ public class PlayerBuilder
     private double actualPoints;
     private double ownership;
     private String gameTime;
+    private String id;
 
     public PlayerBuilder(String name)
     {
@@ -60,39 +61,52 @@ public class PlayerBuilder
         return this;
     }
 
+    public PlayerBuilder withId(String id)
+    {
+        this.id = id;
+        return this;
+    }
+
     public Quarterback createQuarterback()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime,
+                id);
     }
 
     public RunningBack createRunningBack()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime,
+                id);
     }
 
     public WideReceiver createWideReceiver()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime,
+                id);
     }
 
     public TightEnd createTightEnd()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime,
+                id);
     }
 
     public Kicker createKicker()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime,
+                id);
     }
 
     public Defense createDefense()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime,
+                id);
     }
 
     public Player createPlayer()
     {
-        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime);
+        return new PlayerImpl(name, positionDisplay, salary, rank, projectedPoints, actualPoints, ownership, gameTime,
+                id);
     }
 
     private static class PlayerImpl implements Quarterback, RunningBack, WideReceiver, TightEnd, Kicker, Defense
@@ -105,9 +119,10 @@ public class PlayerBuilder
         private final double actualPoints_;
         private final double ownership_;
         private final String gameTime_;
+        private final String id_;
 
         public PlayerImpl(String name, String positionDisplay, int salary, int rank, double projectedPoints,
-                double actualPoints, double ownership, String gameTime)
+                double actualPoints, double ownership, String gameTime, String id)
         {
             this.name_ = name;
             this.positionDisplay_ = positionDisplay;
@@ -117,6 +132,7 @@ public class PlayerBuilder
             this.actualPoints_ = actualPoints;
             this.ownership_ = ownership;
             this.gameTime_ = gameTime;
+            this.id_ = id;
         }
 
         @Override
@@ -168,11 +184,17 @@ public class PlayerBuilder
         }
 
         @Override
+        public String getId()
+        {
+            return id_;
+        }
+
+        @Override
         public String toCsv()
         {
             // line format should be "1,QB,8700,Patrick Mahomes II,25.2,37.7,7.8,Sun 8:20PM"
-            return String.format("%d,%s,%d,%s,%.1f,%.2f,%.1f,%s", rank_, positionDisplay_, salary_, name_,
-                    projectedPoints_, actualPoints_, ownership_, gameTime_);
+            return String.format("%d,%s,%d,%s,%.1f,%.2f,%.1f,%s,%s", rank_, positionDisplay_, salary_, name_,
+                    projectedPoints_, actualPoints_, ownership_, gameTime_, id_);
         }
 
         @Override

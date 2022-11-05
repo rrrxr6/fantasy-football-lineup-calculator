@@ -29,10 +29,11 @@ public class PlayerCsvReader
                 double actualPoints = Double.valueOf(parts[5]);
                 double ownership = Double.valueOf(parts[6]);
                 String gameTime = parts[7];
+                String id = parts[9];
                 playerData.put(new PlayerKey(name, position),
                         new PlayerBuilder(name).withRank(rank).withPositionDisplay(position).withSalary(salary)
                                 .withProjectPoints(projectedPoints).withActualPoints(actualPoints)
-                                .withOwnership(ownership).withGameTime(gameTime));
+                                .withOwnership(ownership).withGameTime(gameTime).withId(id));
             }
         }
         catch (FileNotFoundException e)

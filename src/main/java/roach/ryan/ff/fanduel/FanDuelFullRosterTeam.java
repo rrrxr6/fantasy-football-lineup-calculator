@@ -5,6 +5,7 @@ import java.util.Set;
 
 import roach.ryan.ff.model.Defense;
 import roach.ryan.ff.model.Flex;
+import roach.ryan.ff.model.Player;
 import roach.ryan.ff.model.Quarterback;
 import roach.ryan.ff.model.RunningBack;
 import roach.ryan.ff.model.Team;
@@ -138,6 +139,19 @@ public class FanDuelFullRosterTeam implements Team
         sb.append(flex.getRank());
         sb.append(",");
         sb.append(def.getRank());
+        return sb.toString();
+    }
+
+    @Override
+    public String toLineupIdsCsv()
+    {
+        StringBuilder sb = new StringBuilder();
+        for (Player player : Set.of(qb, rb1, rb2, wr1, wr2, wr3, te, flex, def))
+        {
+            sb.append(player.getId());
+            sb.append(",");
+        }
+        sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
     }
 
