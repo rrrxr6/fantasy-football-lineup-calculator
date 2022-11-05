@@ -1,5 +1,6 @@
 package roach.ryan.ff.fanduel;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
@@ -153,6 +154,12 @@ public class FanDuelFullRosterTeam implements Team
         }
         sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
+    }
+
+    @Override
+    public Collection<Player> getPlayers()
+    {
+        return Set.of(qb, rb1, rb2, wr1, wr2, wr3, te, flex, def);
     }
 
     @Override

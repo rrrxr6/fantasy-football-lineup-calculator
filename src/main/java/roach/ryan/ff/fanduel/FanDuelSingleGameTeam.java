@@ -3,6 +3,7 @@ package roach.ryan.ff.fanduel;
 import static java.util.Comparator.comparing;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -137,6 +138,12 @@ public class FanDuelSingleGameTeam implements Team
         }
         sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
+    }
+
+    @Override
+    public Collection<Player> getPlayers()
+    {
+        return Set.of(p1, p2, p3, p4, p5);
     }
 
     @Override
