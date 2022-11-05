@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import roach.ryan.ff.analysis.PlayerDistribution;
 import roach.ryan.ff.data.DataParser;
 import roach.ryan.ff.data.FreeAgentPool;
 import roach.ryan.ff.data.Partitioner;
@@ -47,6 +48,7 @@ public class OptimizeFullRosterLineup
 
         teams.subList(0, teams.size() - 100).clear();
         printTeams(teams);
+        new PlayerDistribution(teams).print();
         // csv(teams);
     }
 

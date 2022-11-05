@@ -54,7 +54,7 @@ public class FanDuelFullRosterOptimizer
             System.exit(0);
         }
 
-        TopTeams teams = new TopTeams(50, comparator);
+        TopTeams teams = new TopTeams(100, comparator);
         for (Flex flex : flexes)
         {
             System.out.print("(" + COUNT.getAndIncrement() + "/" + progress + ")\r");
@@ -90,8 +90,7 @@ public class FanDuelFullRosterOptimizer
                                             {
                                                 continue;
                                             }
-                                            // if (sumOwnership(qb, rb1, rb2, wr1, wr2, wr3, te, flex,
-                                            // def) >= 70)
+                                            // if (sumOwnership(qb, rb1, rb2, wr1, wr2, wr3, te, flex, def) >= 80)
                                             // {
                                             // continue;
                                             // }
