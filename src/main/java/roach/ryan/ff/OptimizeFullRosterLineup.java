@@ -45,7 +45,9 @@ public class OptimizeFullRosterLineup
             System.out.println("No valid teams can be made from the pool.");
         }
 
+        teams.subList(0, teams.size() - 100).clear();
         printTeams(teams);
+        // csv(teams);
     }
 
     private static void printTeams(List<Team> teams)
@@ -56,6 +58,15 @@ public class OptimizeFullRosterLineup
         {
             System.out.println("#" + i--);
             System.out.println(it.next());
+        }
+    }
+
+    private static void csv(List<Team> teams)
+    {
+        Iterator<Team> it = teams.iterator();
+        while (it.hasNext())
+        {
+            System.out.println(it.next().toLineupIdsCsv());
         }
     }
 }

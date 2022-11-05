@@ -15,4 +15,6 @@ public interface Team
     double getOwnership();
 
     String toStringCsv();
+
+    String toLineupIdsCsv();
 }

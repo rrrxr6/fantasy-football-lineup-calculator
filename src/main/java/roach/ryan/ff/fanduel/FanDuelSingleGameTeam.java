@@ -125,6 +125,21 @@ public class FanDuelSingleGameTeam implements Team
     }
 
     @Override
+    public String toLineupIdsCsv()
+    {
+        StringBuilder sb = new StringBuilder();
+        List<Player> players = Arrays.asList(p1, p2, p3, p4, p5);
+        players.sort(comparing(Player::getProjectedPoints).reversed());
+        for (Player player : players)
+        {
+            sb.append(player.getId());
+            sb.append(",");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
+    }
+
+    @Override
     public String toString()
     {
         StringBuilder sb = new StringBuilder("Projected Points: ");
