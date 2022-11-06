@@ -1,6 +1,7 @@
 package roach.ryan.ff.fanduel;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -147,7 +148,7 @@ public class FanDuelFullRosterTeam implements Team
     public String toLineupIdsCsv()
     {
         StringBuilder sb = new StringBuilder();
-        for (Player player : Set.of(qb, rb1, rb2, wr1, wr2, wr3, te, flex, def))
+        for (Player player : List.of(qb, rb1, rb2, wr1, wr2, wr3, te, flex, def))
         {
             sb.append(player.getId());
             sb.append(",");
