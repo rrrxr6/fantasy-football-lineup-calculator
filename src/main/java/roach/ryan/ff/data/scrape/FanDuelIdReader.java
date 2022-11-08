@@ -25,11 +25,15 @@ public class FanDuelIdReader
             {
                 String line = scanner.nextLine();
                 String[] parts = line.split(",");
-                String id = parts[0].replaceAll("[^0-9-]+", "");
+                String id = parts[0].replaceAll("[^0-9A-Za-z- :.']+", "");
                 String name = parts[1];
                 String position = parts[2];
                 PlayerKey playerKey = new PlayerKey(convert(name), position);
                 playerData.computeIfPresent(playerKey, (key, builder) -> builder.withId(id));
+                if (!playerData.containsKey(playerKey))
+                {
+                    System.out.println(name + ":" + position);
+                }
             }
         }
         catch (FileNotFoundException e)
