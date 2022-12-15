@@ -20,7 +20,6 @@ public class NameConversionUtil
         NAMES.put("Duke Johnson", "Duke Johnson Jr.");
         NAMES.put("Stanley Berryhill", "Stanley Berryhill III");
         NAMES.put("Mark Vital", "Mark Vital Jr.");
-        NAMES.put("DJ Chark Jr.", "D.J. Chark Jr.");
         NAMES.put("Demetric Felton", "Demetric Felton Jr.");
         NAMES.put("Troy Hairston", "Troy Hairston II");
         NAMES.put("Terry Godwin II", "Terry Godwin");
