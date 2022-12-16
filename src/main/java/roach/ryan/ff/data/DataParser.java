@@ -154,7 +154,7 @@ public class DataParser
         {
             Player last = current;
             current = iterator.next();
-            if (current.getSalary() > last.getSalary() || current.getProjectedPoints() < avgPoints)
+            if (current.getSalary() >= last.getSalary() || current.getProjectedPoints() < avgPoints)
             {
                 iterator.remove();
                 current = last;
